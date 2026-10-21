@@ -1,0 +1,776 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Create Account | Stackly Investment & Wealth Planning, Salem</title>
+    <meta name="description" content="Create your Stackly Wealth account. Track mutual funds, goal-based SIPs, retirement planning, and get dedicated advisory in Salem.">
+
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="portal.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Sora:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Sora', 'system-ui', 'sans-serif'],
+                        serif: ['Instrument Serif', 'Georgia', 'serif']
+                    },
+                    colors: {
+                        bg: '#07090d',
+                        bg2: '#0c1016',
+                        surface: '#10151d',
+                        line: 'rgba(255, 255, 255, 0.08)',
+                        accent: '#c8f169',
+                        accent2: '#5ee6b8',
+                        gold: '#e8c987',
+                        muted: '#8b95a5'
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        :root {
+            --bg: #07090d;
+            --bg2: #0c1016;
+            --surface: #10151d;
+            --line: rgba(255, 255, 255, 0.08);
+            --text: #eef1f5;
+            --muted: #8b95a5;
+            --accent: #c8f169;
+            --accent2: #5ee6b8;
+            --gold: #e8c987;
+            --radius: 22px;
+            --serif: 'Instrument Serif', Georgia, serif;
+            --sans: 'Sora', system-ui, sans-serif;
+        }
+
+        * { box-sizing: border-box; }
+        body {
+            font-family: var(--sans);
+            background-color: var(--bg);
+            color: var(--text);
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+            min-height: 100vh;
+        }
+
+        ::-webkit-scrollbar { width: 5px; }
+        ::-webkit-scrollbar-track { background: var(--bg); }
+        ::-webkit-scrollbar-thumb { background: #1a2230; border-radius: 10px; }
+
+        /* Brand logo */
+        .logo-mark { display: inline-grid; gap: 3px; width: 22px; vertical-align: middle; }
+        .logo-mark i { display: block; height: 4.5px; border-radius: 3px; background: var(--accent); }
+        .logo-mark i:nth-child(2) { width: 80%; opacity: .75; }
+        .logo-mark i:nth-child(3) { width: 55%; opacity: .45; }
+
+        /* Left Cinematic Panel */
+        .auth-left {
+            background: radial-gradient(circle at 20% 30%, rgba(20, 27, 38, 0.95), var(--bg));
+            position: relative;
+            overflow: hidden;
+            border-right: 1px solid var(--line);
+        }
+
+        /* Ambient Orbs */
+        .orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.35;
+            pointer-events: none;
+        }
+        .orb-a {
+            width: 420px; height: 420px;
+            background: rgba(94, 230, 184, 0.16);
+            top: -100px; right: -80px;
+            animation: orbFloat 14s ease-in-out infinite alternate;
+        }
+        .orb-b {
+            width: 440px; height: 440px;
+            background: rgba(200, 241, 105, 0.12);
+            bottom: -100px; left: -80px;
+            animation: orbFloat 16s ease-in-out infinite alternate-reverse;
+        }
+        @keyframes orbFloat {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(30px, 40px); }
+        }
+
+
+        /* Input Styles */
+        .auth-input {
+            background: #0c1016;
+            border: 1px solid var(--line);
+            color: var(--text);
+            transition: all 0.25s ease;
+            width: 100%;
+            padding: 0.85rem 1rem 0.85rem 2.75rem;
+            border-radius: 12px;
+            font-size: 0.88rem;
+            outline: none;
+        }
+        .auth-input::placeholder { color: #526075; }
+        .auth-input:focus {
+            border-color: var(--accent);
+            background: #0f151e;
+            box-shadow: 0 0 0 3px rgba(200, 241, 105, 0.15);
+        }
+        .auth-input.input-error {
+            border-color: #ef4444 !important;
+            box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.15) !important;
+            background: rgba(239, 68, 68, 0.03) !important;
+        }
+        .auth-input.input-success {
+            border-color: var(--accent) !important;
+            box-shadow: 0 0 0 3px rgba(200, 241, 105, 0.15) !important;
+        }
+
+        /* Password strength meter */
+        .strength-bar-container {
+            display: flex;
+            gap: 4px;
+            margin-top: 0.4rem;
+        }
+        .strength-segment {
+            flex: 1;
+            height: 3px;
+            background: #1a2230;
+            border-radius: 2px;
+            transition: background 0.3s ease;
+        }
+        .strength-segment.weak { background: #ef4444; }
+        .strength-segment.medium { background: #f59e0b; }
+        .strength-segment.strong { background: var(--accent); }
+
+        /* Password requirements */
+        .req-item {
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            font-size: 0.72rem;
+            color: #526075;
+            transition: color 0.3s;
+        }
+        .req-item.met { color: var(--accent); }
+        .req-item i { font-size: 0.65rem; }
+
+        /* Role Switcher */
+        .role-switcher {
+            background: #0c1016;
+            border: 1px solid var(--line);
+            border-radius: 999px;
+            padding: 4px;
+            display: flex;
+            position: relative;
+        }
+        .role-pill {
+            position: absolute;
+            top: 4px;
+            bottom: 4px;
+            background: var(--accent);
+            border-radius: 999px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 2px 10px rgba(200, 241, 105, 0.35);
+        }
+        .role-btn {
+            flex: 1;
+            padding: 0.6rem 1rem;
+            font-size: 0.76rem;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+            color: var(--muted);
+            z-index: 2;
+            position: relative;
+            text-align: center;
+            cursor: pointer;
+            border: none;
+            background: transparent;
+            transition: color 0.3s;
+        }
+        .role-btn.active { color: #07090d; font-weight: 700; }
+
+        /* Submit Button */
+        .btn-submit {
+            width: 100%;
+            padding: 0.95rem 2rem;
+            background: var(--accent);
+            color: #07090d;
+            font-weight: 700;
+            font-size: 0.88rem;
+            letter-spacing: 0.04em;
+            border: none;
+            border-radius: 999px;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.2, 0.7, 0.1, 1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.6rem;
+            box-shadow: 0 8px 25px -6px rgba(200, 241, 105, 0.4);
+        }
+        .btn-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 14px 32px -6px rgba(200, 241, 105, 0.6);
+            background: #d4f682;
+        }
+        .btn-submit:active { transform: translateY(0); }
+        .btn-submit:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* Alert Boxes */
+        .alert-error {
+            background: rgba(239, 68, 68, 0.1);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            border-radius: 12px;
+            padding: 0.75rem 1rem;
+            display: flex;
+            align-items: flex-start;
+            gap: 0.6rem;
+            font-size: 0.8rem;
+            color: #fca5a5;
+        }
+        .alert-success {
+            background: rgba(200, 241, 105, 0.12);
+            border: 1px solid rgba(200, 241, 105, 0.3);
+            border-radius: 12px;
+            padding: 0.75rem 1rem;
+            display: flex;
+            align-items: flex-start;
+            gap: 0.6rem;
+            font-size: 0.8rem;
+            color: #c8f169;
+        }
+
+        /* Error Text */
+        .error-text {
+            font-size: 0.72rem;
+            color: #ef4444;
+            margin-top: 0.35rem;
+            margin-left: 0.25rem;
+            display: none;
+        }
+        .error-text.show { display: block; }
+
+        .nav-link {
+            font-size: 0.82rem;
+            color: var(--muted);
+            transition: color 0.25s;
+        }
+        .nav-link:hover { color: var(--text); }
+
+        .divider { height: 1px; background: var(--line); }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(18px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .fade-up { animation: fadeInUp 0.55s cubic-bezier(0.16, 1, 0.3, 1) both; }
+        .delay-100 { animation-delay: 0.1s; }
+        .delay-200 { animation-delay: 0.2s; }
+        .delay-300 { animation-delay: 0.3s; }
+
+        .spinner {
+            width: 16px; height: 16px;
+            border: 2px solid rgba(7, 9, 13, 0.25);
+            border-top-color: #07090d;
+            border-radius: 50%;
+            animation: spin 0.6s linear infinite;
+            display: none;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        .dot {
+            display: inline-block;
+            width: 7px; height: 7px;
+            border-radius: 50%;
+            background: var(--accent);
+            box-shadow: 0 0 10px var(--accent);
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse { 50% { opacity: 0.35; } }
+    </style>
+</head>
+<body>
+
+    <div class="flex min-h-screen relative">
+
+        <!-- Left: Why Plan With Stackly Panel (hidden on mobile) -->
+        <div class="hidden lg:flex lg:w-5/12 auth-left flex-col justify-between p-12 xl:p-14 relative">
+            <div class="orb orb-a"></div>
+            <div class="orb orb-b"></div>
+
+            <!-- Logo Top -->
+            <div class="relative z-10">
+                <a href="index.html" class="inline-flex items-center gap-3 group">
+                    <img src="assets/stackly-logo.webp" alt="Stackly" class="logo-img" />
+                </a>
+            </div>
+
+            <!-- Benefits Center -->
+            <div class="relative z-10 my-auto py-8">
+                <div class="inline-flex items-center gap-2 text-xs uppercase tracking-widest text-[#8b95a5] mb-5 px-3.5 py-1.5 rounded-full border border-[rgba(255,255,255,0.08)] bg-[rgba(255,255,255,0.02)]">
+                    <span class="dot"></span> Why Plan With Stackly
+                </div>
+                <h1 class="text-3xl xl:text-4xl font-normal leading-tight font-serif text-[#eef1f5] mb-6">
+                    Your financial future, <br><span class="italic text-[#c8f169]">disciplined &amp; engineered</span>.
+                </h1>
+
+                <ul class="space-y-4">
+                    <li class="flex items-start gap-3 text-sm text-[#eef1f5]">
+                        <span class="w-5 h-5 rounded-full bg-[#c8f169]/15 text-[#c8f169] flex items-center justify-center shrink-0 mt-0.5 text-xs">
+                            <i class="fa-solid fa-check"></i>
+                        </span>
+                        <span><strong class="font-medium text-white">Goal-Driven Portfolios:</strong> Concrete targets for retirement, children's education &amp; home purchase.</span>
+                    </li>
+                    <li class="flex items-start gap-3 text-sm text-[#eef1f5]">
+                        <span class="w-5 h-5 rounded-full bg-[#c8f169]/15 text-[#c8f169] flex items-center justify-center shrink-0 mt-0.5 text-xs">
+                            <i class="fa-solid fa-check"></i>
+                        </span>
+                        <span><strong class="font-medium text-white">Disciplined Mutual Funds &amp; SIPs:</strong> Risk-aligned asset allocation with scheduled rebalancing.</span>
+                    </li>
+                    <li class="flex items-start gap-3 text-sm text-[#eef1f5]">
+                        <span class="w-5 h-5 rounded-full bg-[#c8f169]/15 text-[#c8f169] flex items-center justify-center shrink-0 mt-0.5 text-xs">
+                            <i class="fa-solid fa-check"></i>
+                        </span>
+                        <span><strong class="font-medium text-white">100% Fee Transparency:</strong> Dedicated Salem wealth advisor with all fee agreements in writing.</span>
+                    </li>
+                    <li class="flex items-start gap-3 text-sm text-[#eef1f5]">
+                        <span class="w-5 h-5 rounded-full bg-[#c8f169]/15 text-[#c8f169] flex items-center justify-center shrink-0 mt-0.5 text-xs">
+                            <i class="fa-solid fa-check"></i>
+                        </span>
+                        <span><strong class="font-medium text-white">Tax-Smart Investing:</strong> Keep more of what you earn legally through optimal asset location.</span>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Trusted by Bottom -->
+            <div class="relative z-10 border-t border-[rgba(255,255,255,0.08)] pt-6">
+                <div class="text-[10px] uppercase tracking-widest text-[#8b95a5] mb-3">Trusted by Clients in Salem &amp; Beyond</div>
+                <div class="flex items-center gap-2 flex-wrap">
+                    <span class="text-xs text-[#8b95a5] border border-[rgba(255,255,255,0.08)] bg-white/5 px-3 py-1 rounded-full">Business Families</span>
+                    <span class="text-xs text-[#8b95a5] border border-[rgba(255,255,255,0.08)] bg-white/5 px-3 py-1 rounded-full">Doctors &amp; Healthcare</span>
+                    <span class="text-xs text-[#8b95a5] border border-[rgba(255,255,255,0.08)] bg-white/5 px-3 py-1 rounded-full">Tech Leaders</span>
+                    <span class="text-xs text-[#8b95a5] border border-[rgba(255,255,255,0.08)] bg-white/5 px-3 py-1 rounded-full">Salem NRIs</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Right: Sign Up Form -->
+        <div class="w-full lg:w-7/12 flex flex-col min-h-screen bg-[#07090d] relative z-10">
+
+            <!-- Top Navigation -->
+            <header class="sticky top-0 bg-[#07090d]/85 backdrop-blur-md z-30 flex justify-between items-center px-6 md:px-12 py-5 border-b border-[rgba(255,255,255,0.08)]">
+                <a href="index.html" class="lg:hidden inline-flex items-center gap-2">
+                    <img src="assets/stackly-logo.webp" alt="Stackly" class="logo-img" />
+                </a>
+                <div class="hidden lg:flex items-center gap-6">
+                    <a href="index.html" class="nav-link">Home</a>
+                    <a href="services.html" class="nav-link">Services</a>
+                    <a href="about.html" class="nav-link">About</a>
+                    <a href="blog.html" class="nav-link">Blog</a>
+                    <a href="contact.html" class="nav-link">Contact</a>
+                </div>
+                <div class="flex items-center gap-3 ml-auto lg:ml-0">
+                    <span class="text-xs text-[#8b95a5] hidden sm:inline">Have an account?</span>
+                    <a href="login.html" class="text-xs font-semibold px-4 py-2 rounded-full border border-white/20 text-white hover:bg-white hover:text-[#07090d] transition-all duration-300">
+                        Sign In
+                    </a>
+                </div>
+            </header>
+
+            <!-- Form Area -->
+            <main class="flex-1 flex items-center justify-center px-6 md:px-12 py-10">
+                <div class="w-full max-w-lg fade-up">
+
+                    <!-- Header -->
+                    <div class="mb-7">
+                        <div class="inline-flex items-center gap-2 text-[10px] uppercase tracking-widest text-[#8b95a5] mb-2 font-medium">
+                            <span class="dot"></span> New Wealth Account
+                        </div>
+                        <h2 class="text-3xl font-serif font-normal text-[#eef1f5] mb-2 tracking-tight">Join Stackly Wealth</h2>
+                        <p class="text-xs sm:text-sm text-[#8b95a5]">Create your account to start disciplined wealth planning with Salem's trusted advisors.</p>
+                    </div>
+
+                    <!-- Role Switcher -->
+                    <div class="role-switcher mb-7 fade-up delay-100">
+                        <div class="role-pill" id="role-pill" style="left:4px; width: calc(50% - 8px);"></div>
+                        <button type="button" class="role-btn active" id="btn-user" onclick="selectRole('user')">
+                            <i class="fa-solid fa-user mr-1.5 text-xs"></i> Client / Investor
+                        </button>
+                        <button type="button" class="role-btn" id="btn-admin" onclick="selectRole('admin')">
+                            <i class="fa-solid fa-shield-halved mr-1.5 text-xs"></i> Advisor / Admin
+                        </button>
+                    </div>
+
+                    <!-- Alerts -->
+                    <div class="alert-error mb-5 fade-up delay-100" id="error-alert" style="display:none;">
+                        <i class="fa-solid fa-triangle-exclamation mt-0.5 shrink-0"></i>
+                        <span id="error-text">Please fix the errors below.</span>
+                    </div>
+                    <div class="alert-success mb-5 fade-up delay-100" id="success-alert" style="display:none;">
+                        <i class="fa-solid fa-circle-check mt-0.5 shrink-0"></i>
+                        <span id="success-text">Account created! Redirecting to sign in...</span>
+                    </div>
+
+                    <!-- Form -->
+                    <form id="signup-form" onsubmit="handleSignup(event)" novalidate class="space-y-4 fade-up delay-200">
+                        <input type="hidden" id="signup-role" value="user">
+
+                        <!-- Name Row -->
+                        <div class="grid grid-cols-2 gap-4">
+                            <div>
+                                <label for="first-name" class="block text-[11px] font-semibold uppercase tracking-wider text-[#8b95a5] mb-2">First Name</label>
+                                <div class="relative">
+                                    <i class="fa-solid fa-user absolute left-3.5 top-1/2 -translate-y-1/2 text-[#526075] text-sm"></i>
+                                    <input type="text" id="first-name" class="auth-input" placeholder="Ramesh" autocomplete="given-name" pattern="^[^0-9]*$" title="Numbers are not allowed in the first name field." required>
+                                </div>
+                                <div class="error-text" id="fname-error"><i class="fa-solid fa-circle-xmark mr-1"></i><span id="fname-msg"></span></div>
+                            </div>
+                            <div>
+                                <label for="last-name" class="block text-[11px] font-semibold uppercase tracking-wider text-[#8b95a5] mb-2">Last Name</label>
+                                <div class="relative">
+                                    <i class="fa-solid fa-user absolute left-3.5 top-1/2 -translate-y-1/2 text-[#526075] text-sm"></i>
+                                    <input type="text" id="last-name" class="auth-input" placeholder="Kumar" autocomplete="family-name" pattern="^[^0-9]*$" title="Numbers are not allowed in the last name field." required>
+                                </div>
+                                <div class="error-text" id="lname-error"><i class="fa-solid fa-circle-xmark mr-1"></i><span id="lname-msg"></span></div>
+                            </div>
+                        </div>
+
+                        <!-- Email -->
+                        <div>
+                            <label for="signup-email" class="block text-[11px] font-semibold uppercase tracking-wider text-[#8b95a5] mb-2">Email Address</label>
+                            <div class="relative">
+                                <i class="fa-solid fa-envelope absolute left-3.5 top-1/2 -translate-y-1/2 text-[#526075] text-sm"></i>
+                                <input type="email" id="signup-email" class="auth-input" placeholder="you@example.com" autocomplete="email">
+                            </div>
+                            <div class="error-text" id="email-error"><i class="fa-solid fa-circle-xmark mr-1"></i><span id="email-msg"></span></div>
+                        </div>
+
+                        <!-- Phone -->
+                        <div>
+                            <label for="signup-phone" class="block text-[11px] font-semibold uppercase tracking-wider text-[#8b95a5] mb-2">Mobile Number (India)</label>
+                            <div class="relative">
+                                <i class="fa-solid fa-phone absolute left-3.5 top-1/2 -translate-y-1/2 text-[#526075] text-sm"></i>
+                                <input type="tel" id="signup-phone" class="auth-input" placeholder="9876543210" autocomplete="tel" pattern="[0-9]{10}" title="Phone number must be exactly 10 digits." required>
+                            </div>
+                            <div class="error-text" id="phone-error"><i class="fa-solid fa-circle-xmark mr-1"></i><span id="phone-msg"></span></div>
+                        </div>
+
+                        <!-- Password -->
+                        <div>
+                            <label for="signup-password" class="block text-[11px] font-semibold uppercase tracking-wider text-[#8b95a5] mb-2">Create Password</label>
+                            <div class="relative">
+                                <i class="fa-solid fa-lock absolute left-3.5 top-1/2 -translate-y-1/2 text-[#526075] text-sm"></i>
+                                <input type="password" id="signup-password" class="auth-input pr-11" placeholder="Minimum 8 characters" autocomplete="new-password" oninput="checkStrength(this.value)">
+                                <button type="button" onclick="togglePwd('signup-password', 'signup-pwd-icon')" class="absolute right-3.5 top-1/2 -translate-y-1/2 text-[#526075] hover:text-[#c8f169] transition-colors focus:outline-none" aria-label="Toggle password visibility">
+                                    <i class="fa-solid fa-eye text-sm" id="signup-pwd-icon"></i>
+                                </button>
+                            </div>
+                            <div class="error-text" id="pw-error"><i class="fa-solid fa-circle-xmark mr-1"></i><span id="pw-msg"></span></div>
+                            <!-- Strength Meter -->
+                            <div class="strength-bar-container mt-2" id="strength-bars">
+                                <div class="strength-segment" id="seg1"></div>
+                                <div class="strength-segment" id="seg2"></div>
+                                <div class="strength-segment" id="seg3"></div>
+                                <div class="strength-segment" id="seg4"></div>
+                            </div>
+                            <div id="strength-text" class="text-[10px] text-[#8b95a5] mt-1"></div>
+                            <!-- Requirements -->
+                            <div class="grid grid-cols-2 gap-1.5 mt-2">
+                                <div class="req-item" id="req-length"><i class="fa-solid fa-circle-dot"></i> 8+ characters</div>
+                                <div class="req-item" id="req-upper"><i class="fa-solid fa-circle-dot"></i> Uppercase letter</div>
+                                <div class="req-item" id="req-number"><i class="fa-solid fa-circle-dot"></i> Number</div>
+                                <div class="req-item" id="req-special"><i class="fa-solid fa-circle-dot"></i> Special character</div>
+                            </div>
+                        </div>
+
+                        <!-- Confirm Password -->
+                        <div>
+                            <label for="confirm-password" class="block text-[11px] font-semibold uppercase tracking-wider text-[#8b95a5] mb-2">Confirm Password</label>
+                            <div class="relative">
+                                <i class="fa-solid fa-lock absolute left-3.5 top-1/2 -translate-y-1/2 text-[#526075] text-sm"></i>
+                                <input type="password" id="confirm-password" class="auth-input pr-11" placeholder="Re-enter password" autocomplete="new-password">
+                                <button type="button" onclick="togglePwd('confirm-password', 'confirm-pwd-icon')" class="absolute right-3.5 top-1/2 -translate-y-1/2 text-[#526075] hover:text-[#c8f169] transition-colors focus:outline-none" aria-label="Toggle password visibility">
+                                    <i class="fa-solid fa-eye text-sm" id="confirm-pwd-icon"></i>
+                                </button>
+                            </div>
+                            <div class="error-text" id="confirm-error"><i class="fa-solid fa-circle-xmark mr-1"></i><span id="confirm-msg"></span></div>
+                        </div>
+
+                        <!-- Terms -->
+                        <div>
+                            <label class="flex items-start gap-2.5 cursor-pointer text-xs text-[#8b95a5] leading-relaxed select-none">
+                                <input type="checkbox" id="terms-check" class="mt-1 w-4 h-4 rounded border-[#1a2230] bg-[#0c1016] accent-[#c8f169] focus:outline-none shrink-0">
+                                <span>I agree to the <a href="404.html" class="text-white underline hover:text-[#c8f169]">Terms of Advisory</a> and <a href="404.html" class="text-white underline hover:text-[#c8f169]">Privacy Policy</a> of Stackly Investment &amp; Wealth Planning.</span>
+                            </label>
+                            <div class="error-text" id="terms-error"><i class="fa-solid fa-circle-xmark mr-1"></i><span id="terms-msg"></span></div>
+                        </div>
+
+                        <div class="divider"></div>
+
+                        <!-- Submit -->
+                        <button type="submit" class="btn-submit" id="signup-btn">
+                            <span class="spinner" id="signup-spinner"></span>
+                            <span id="signup-btn-text">Create Wealth Account</span>
+                            <i class="fa-solid fa-arrow-right text-xs" id="signup-btn-icon"></i>
+                        </button>
+                    </form>
+
+                    <div class="mt-6 text-center text-xs text-[#8b95a5] fade-up delay-300">
+                        Already have an account?
+                        <a href="login.html" class="text-[#c8f169] font-semibold hover:underline ml-1">Sign In</a>
+                    </div>
+                </div>
+            </main>
+
+            <!-- Footer -->
+            <footer class="px-6 md:px-12 py-5 border-t border-[rgba(255,255,255,0.08)] flex flex-wrap justify-between items-center gap-3 text-[11px] text-[#8b95a5]">
+                <p>&copy; 2026 Stackly Investment &amp; Wealth Planning. Salem, Tamil Nadu, India.</p>
+                <div class="flex gap-4">
+                    <a href="index.html" class="hover:text-white transition-colors">Home</a>
+                    <a href="about.html" class="hover:text-white transition-colors">About</a>
+                    <a href="contact.html" class="hover:text-white transition-colors">Contact</a>
+                </div>
+            </footer>
+        </div>
+    </div>
+
+    <script>
+        let currentRole = 'user';
+
+        function selectRole(role) {
+            currentRole = role;
+            document.getElementById('signup-role').value = role;
+            const pill = document.getElementById('role-pill');
+            const btnUser = document.getElementById('btn-user');
+            const btnAdmin = document.getElementById('btn-admin');
+            if (role === 'user') {
+                pill.style.left = '4px';
+                pill.style.width = 'calc(50% - 8px)';
+                btnUser.classList.add('active');
+                btnAdmin.classList.remove('active');
+                document.getElementById('signup-btn-text').textContent = 'Create Wealth Account';
+            } else {
+                pill.style.left = 'calc(50% + 4px)';
+                pill.style.width = 'calc(50% - 8px)';
+                btnAdmin.classList.add('active');
+                btnUser.classList.remove('active');
+                document.getElementById('signup-btn-text').textContent = 'Create Advisor Account';
+            }
+        }
+
+        function togglePwd(inputId, iconId) {
+            const input = document.getElementById(inputId);
+            const icon = document.getElementById(iconId);
+            if (input.type === 'password') {
+                input.type = 'text';
+                icon.classList.replace('fa-eye', 'fa-eye-slash');
+            } else {
+                input.type = 'password';
+                icon.classList.replace('fa-eye-slash', 'fa-eye');
+            }
+        }
+
+        function validateEmail(email) {
+            return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+        }
+
+        function validatePhone(phone) {
+            return /^[0-9]{10}$/.test(phone.replace(/[\s\-\+\(\)]/g, ''));
+        }
+
+        function checkStrength(val) {
+            const seg1 = document.getElementById('seg1');
+            const seg2 = document.getElementById('seg2');
+            const seg3 = document.getElementById('seg3');
+            const seg4 = document.getElementById('seg4');
+            const text = document.getElementById('strength-text');
+
+            const hasLen = val.length >= 8;
+            const hasUpper = /[A-Z]/.test(val);
+            const hasNum = /[0-9]/.test(val);
+            const hasSpec = /[^A-Za-z0-9]/.test(val);
+
+            document.getElementById('req-length').classList.toggle('met', hasLen);
+            document.getElementById('req-upper').classList.toggle('met', hasUpper);
+            document.getElementById('req-number').classList.toggle('met', hasNum);
+            document.getElementById('req-special').classList.toggle('met', hasSpec);
+
+            let score = 0;
+            if (hasLen) score++;
+            if (hasUpper) score++;
+            if (hasNum) score++;
+            if (hasSpec) score++;
+
+            [seg1, seg2, seg3, seg4].forEach(s => s.className = 'strength-segment');
+
+            if (score === 0) { text.textContent = ''; return; }
+            if (score <= 1) {
+                seg1.classList.add('weak');
+                text.textContent = 'Weak';
+                text.style.color = '#ef4444';
+            } else if (score <= 3) {
+                seg1.classList.add('medium');
+                seg2.classList.add('medium');
+                if (score === 3) seg3.classList.add('medium');
+                text.textContent = 'Moderate';
+                text.style.color = '#f59e0b';
+            } else {
+                [seg1, seg2, seg3, seg4].forEach(s => s.classList.add('strong'));
+                text.textContent = 'Strong Password';
+                text.style.color = '#c8f169';
+            }
+        }
+
+        function showErr(inputId, errorId, msgId, msg) {
+            const input = document.getElementById(inputId);
+            const errorDiv = document.getElementById(errorId);
+            const msgEl = document.getElementById(msgId);
+            input.classList.add('input-error');
+            input.classList.remove('input-success');
+            msgEl.textContent = msg;
+            errorDiv.classList.add('show');
+        }
+
+        function showOk(inputId, errorId) {
+            const input = document.getElementById(inputId);
+            const errorDiv = document.getElementById(errorId);
+            input.classList.remove('input-error');
+            input.classList.add('input-success');
+            errorDiv.classList.remove('show');
+        }
+
+        // Live validation listeners
+        document.getElementById('first-name').addEventListener('blur', function() {
+            const v = this.value.trim();
+            if (!v || v.length < 2) showErr('first-name', 'fname-error', 'fname-msg', 'First name is required (min 2 characters).');
+            else showOk('first-name', 'fname-error');
+        });
+        document.getElementById('last-name').addEventListener('blur', function() {
+            const v = this.value.trim();
+            if (!v || v.length < 2) showErr('last-name', 'lname-error', 'lname-msg', 'Last name is required (min 2 characters).');
+            else showOk('last-name', 'lname-error');
+        });
+        document.getElementById('signup-email').addEventListener('blur', function() {
+            const v = this.value.trim();
+            if (!v) showErr('signup-email', 'email-error', 'email-msg', 'Email address is required.');
+            else if (!validateEmail(v)) showErr('signup-email', 'email-error', 'email-msg', 'Enter a valid email address.');
+            else showOk('signup-email', 'email-error');
+        });
+        document.getElementById('signup-phone').addEventListener('blur', function() {
+            const v = this.value.trim();
+            if (!v) showErr('signup-phone', 'phone-error', 'phone-msg', 'Phone number is required.');
+            else if (!validatePhone(v)) showErr('signup-phone', 'phone-error', 'phone-msg', 'Enter a valid 10-digit mobile number.');
+            else showOk('signup-phone', 'phone-error');
+        });
+        document.getElementById('signup-password').addEventListener('blur', function() {
+            const v = this.value;
+            if (!v || v.length < 8) showErr('signup-password', 'pw-error', 'pw-msg', 'Password must be at least 8 characters.');
+            else showOk('signup-password', 'pw-error');
+        });
+        document.getElementById('confirm-password').addEventListener('blur', function() {
+            const v = this.value;
+            const pw = document.getElementById('signup-password').value;
+            if (!v) showErr('confirm-password', 'confirm-error', 'confirm-msg', 'Please confirm your password.');
+            else if (v !== pw) showErr('confirm-password', 'confirm-error', 'confirm-msg', 'Passwords do not match.');
+            else showOk('confirm-password', 'confirm-error');
+        });
+
+        function handleSignup(e) {
+            e.preventDefault();
+            const fname = document.getElementById('first-name').value.trim();
+            const lname = document.getElementById('last-name').value.trim();
+            const email = document.getElementById('signup-email').value.trim();
+            const phone = document.getElementById('signup-phone').value.trim();
+            const password = document.getElementById('signup-password').value;
+            const confirmPw = document.getElementById('confirm-password').value;
+            const terms = document.getElementById('terms-check').checked;
+            const role = currentRole;
+
+            let valid = true;
+
+            if (fname.length < 2) { showErr('first-name','fname-error','fname-msg','First name is required.'); valid = false; } else showOk('first-name','fname-error');
+            if (lname.length < 2) { showErr('last-name','lname-error','lname-msg','Last name is required.'); valid = false; } else showOk('last-name','lname-error');
+            if (!email) { showErr('signup-email','email-error','email-msg','Email address is required.'); valid = false; }
+            else if (!validateEmail(email)) { showErr('signup-email','email-error','email-msg','Enter a valid email.'); valid = false; }
+            else showOk('signup-email','email-error');
+            if (!phone) { showErr('signup-phone','phone-error','phone-msg','Phone number is required.'); valid = false; }
+            else if (!validatePhone(phone)) { showErr('signup-phone','phone-error','phone-msg','Enter a valid 10-digit phone number.'); valid = false; }
+            else showOk('signup-phone','phone-error');
+            if (!password || password.length < 8) { showErr('signup-password','pw-error','pw-msg','Password must be at least 8 characters.'); valid = false; } else showOk('signup-password','pw-error');
+            if (!confirmPw) { showErr('confirm-password','confirm-error','confirm-msg','Please confirm your password.'); valid = false; }
+            else if (confirmPw !== password) { showErr('confirm-password','confirm-error','confirm-msg','Passwords do not match.'); valid = false; }
+            else showOk('confirm-password','confirm-error');
+            if (!terms) {
+                document.getElementById('terms-error').classList.add('show');
+                document.getElementById('terms-msg').textContent = 'You must accept the Terms of Advisory.';
+                valid = false;
+            } else {
+                document.getElementById('terms-error').classList.remove('show');
+            }
+
+            if (!valid) {
+                const errAlert = document.getElementById('error-alert');
+                document.getElementById('error-text').textContent = 'Please correct all highlighted errors before creating your account.';
+                errAlert.style.display = 'flex';
+                setTimeout(() => errAlert.style.display = 'none', 6000);
+                return;
+            }
+
+            document.getElementById('error-alert').style.display = 'none';
+
+            // Loading state
+            const btn = document.getElementById('signup-btn');
+            btn.disabled = true;
+            document.getElementById('signup-spinner').style.display = 'block';
+            document.getElementById('signup-btn-text').textContent = 'Creating Wealth Account...';
+            document.getElementById('signup-btn-icon').style.display = 'none';
+
+            // Store data
+            const fullName = fname + ' ' + lname;
+            localStorage.setItem('stackly_user_email', email);
+            localStorage.setItem('stackly_user_name', fullName);
+            localStorage.setItem('stackly_user_role', role);
+            localStorage.setItem('stackly_user_phone', phone);
+            localStorage.setItem('userEmail', email);
+            localStorage.setItem('email', email);
+            localStorage.setItem('name', fullName);
+
+            // Store in registered users directory
+            try {
+                const users = JSON.parse(localStorage.getItem('stackly_registered_users') || '{}');
+                users[email.toLowerCase()] = {
+                    name: fullName,
+                    fname: fname,
+                    lname: lname,
+                    email: email,
+                    phone: phone,
+                    role: role
+                };
+                localStorage.setItem('stackly_registered_users', JSON.stringify(users));
+            } catch (err) {}
+
+            const successAlert = document.getElementById('success-alert');
+            document.getElementById('success-text').textContent = `Account created! Welcome to Stackly, ${fname}!`;
+            successAlert.style.display = 'flex';
+
+            setTimeout(() => {
+                window.location.href = `login.html?email=${encodeURIComponent(email)}&msg=${encodeURIComponent('Account created successfully! Please sign in to continue.')}`;
+            }, 1400);
+        }
+    </script>
+</body>
+</html>

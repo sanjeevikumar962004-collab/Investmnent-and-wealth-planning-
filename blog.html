@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<title>Blog | Stackly Investment & Wealth Planning, Salem</title>
+<meta name="description" content="Plain-language articles on investing, goal planning, tax, insurance and retirement from the Stackly team in Salem." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Sora:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+<div class="glow" aria-hidden="true"></div>
+<div class="grain" aria-hidden="true"></div>
+
+<header class="nav" id="nav">
+  <a href="index.html" class="logo" aria-label="Stackly home"><img src="assets/stackly-logo.webp" alt="Stackly" class="logo-img" /></a>
+  <nav class="nav-links" id="navLinks">
+    <a href="index.html">Home</a>
+    <a href="services.html">Services</a>
+    <a href="about.html">About</a>
+    <a href="blog.html" class="active" aria-current="page">Blog</a>
+    <a href="contact.html">Contact</a>
+  </nav>
+  <a href="login.html" class="btn btn-sm btn-light nav-cta">Login</a>
+  <button class="burger" id="burger" aria-label="Menu"><span></span><span></span></button>
+</header>
+
+<main>
+<section class="page-hero hero-blog">
+  <div class="orb orb-a"></div>
+  <div class="container">
+    <nav class="crumbs" aria-label="Breadcrumb"><a href="index.html">Home</a><span>/</span><span>Blog</span></nav>
+    <p class="eyebrow reveal"><span class="dot"></span> The Stackly blog</p>
+    <h1 class="page-title" data-split="words">Money ideas, explained without the jargon.</h1>
+    <p class="page-sub reveal" data-delay="300">Practical guides on investing, saving, tax, insurance and retirement, written for real families in Salem and beyond.</p>
+  </div>
+</section>
+
+<!-- FEATURED -->
+<section class="section section-tight-top" style="padding-top:36px;padding-bottom:0">
+  <div class="container">
+    <a href="blog-post.html" class="feature reveal">
+      <img src="assets/thumb-sip.webp" width="600" height="400" alt="Rising bars showing steady growth" decoding="async" />
+      <div class="feature-body">
+        <span class="tag">Featured · Investing</span>
+        <h2>SIP or lump sum: how to decide</h2>
+        <p class="muted">Two ways to put money to work, and why the better choice depends less on the market and more on your cash flow, timeline and temperament.</p>
+        <span class="meta">6 min read · By the Stackly team</span>
+        <span class="link-arrow">Read the article <span>→</span></span>
+      </div>
+    </a>
+  </div>
+</section>
+
+<!-- LIST -->
+<section class="section" id="articles">
+  <div class="container">
+    <div class="toolbar reveal">
+      <div class="chips" role="group" aria-label="Filter articles">
+        <button class="chip active" data-filter="all" type="button">All</button>
+        <button class="chip" data-filter="investing" type="button">Investing</button>
+        <button class="chip" data-filter="planning" type="button">Planning</button>
+        <button class="chip" data-filter="tax" type="button">Tax</button>
+        <button class="chip" data-filter="insurance" type="button">Insurance</button>
+        <button class="chip" data-filter="retirement" type="button">Retirement</button>
+      </div>
+      <label class="search"><span class="sr">Search articles</span><input type="search" id="blogSearch" placeholder="Search articles" autocomplete="off" /></label>
+    </div>
+
+    <div class="posts" id="posts">
+      <article class="post reveal" data-cat="planning">
+        <img src="assets/thumb-emergency.webp" width="600" height="400" alt="Shield with a check mark" loading="lazy" decoding="async" />
+        <div class="post-body"><span class="tag">Planning</span><h3>How big should your emergency fund be?</h3><p>A simple way to size a safety net around your monthly expenses and income stability.</p><span class="meta">5 min read</span></div>
+      </article>
+      <article class="post reveal" data-delay="100" data-cat="investing">
+        <img src="assets/thumb-funds.webp" width="600" height="400" alt="Donut chart of a diversified portfolio" loading="lazy" decoding="async" />
+        <div class="post-body"><span class="tag">Investing</span><h3>Understanding mutual fund risk labels</h3><p>What the risk-o-meter tells you, and what it leaves out when you choose a fund.</p><span class="meta">6 min read</span></div>
+      </article>
+      <article class="post reveal" data-delay="200" data-cat="retirement">
+        <img src="assets/goal-retirement.webp" width="600" height="440" alt="Sunset over hills" loading="lazy" decoding="async" />
+        <div class="post-body"><span class="tag">Retirement</span><h3>How much do you really need to retire?</h3><p>Start from your future expenses, add inflation, and work backwards to a monthly target.</p><span class="meta">7 min read</span></div>
+      </article>
+      <article class="post reveal" data-cat="tax">
+        <img src="assets/thumb-tax.webp" width="600" height="400" alt="Document with a percent badge" loading="lazy" decoding="async" />
+        <div class="post-body"><span class="tag">Tax</span><h3>Tax planning is a year-round habit</h3><p>Why spreading decisions across the year beats a last-minute rush before the deadline.</p><span class="meta">5 min read</span></div>
+      </article>
+      <article class="post reveal" data-delay="100" data-cat="insurance">
+        <img src="assets/thumb-emergency.webp" width="600" height="400" alt="Shield with a check mark" loading="lazy" decoding="async" />
+        <div class="post-body"><span class="tag">Insurance</span><h3>Why protection comes before investing</h3><p>Life and health cover protect the plan, so a single event does not undo years of saving.</p><span class="meta">6 min read</span></div>
+      </article>
+      <article class="post reveal" data-delay="200" data-cat="planning">
+        <img src="assets/goal-education.webp" width="600" height="440" alt="Graduation cap on books" loading="lazy" decoding="async" />
+        <div class="post-body"><span class="tag">Planning</span><h3>Planning for your child's education</h3><p>Begin with the date the fees fall due, then build a plan backwards from there.</p><span class="meta">6 min read</span></div>
+      </article>
+      <article class="post reveal" data-cat="planning">
+        <img src="assets/thumb-business.webp" width="600" height="400" alt="Business buildings and a coin" loading="lazy" decoding="async" />
+        <div class="post-body"><span class="tag">Planning</span><h3>Business owners: pay yourself, then invest</h3><p>Separate business and personal money so your wealth does not depend on one source.</p><span class="meta">5 min read</span></div>
+      </article>
+      <article class="post reveal" data-delay="100" data-cat="investing">
+        <img src="assets/thumb-sip.webp" width="600" height="400" alt="Rising bars showing steady growth" loading="lazy" decoding="async" />
+        <div class="post-body"><span class="tag">Investing</span><h3>The power of staying invested</h3><p>Why time in the market and a steady habit matter more than perfect timing.</p><span class="meta">5 min read</span></div>
+      </article>
+      <article class="post reveal" data-delay="200" data-cat="retirement">
+        <img src="assets/goal-home.webp" width="600" height="440" alt="Home with warm lit windows" loading="lazy" decoding="async" />
+        <div class="post-body"><span class="tag">Retirement</span><h3>Should you clear your home loan before retiring?</h3><p>A framework for weighing a debt-free life against keeping your savings working.</p><span class="meta">6 min read</span></div>
+      </article>
+    </div>
+    <p class="empty" id="blogEmpty" hidden>No articles match your search. Try another word or topic.</p>
+  </div>
+</section>
+
+<!-- TOPICS -->
+<section class="section section-dark">
+  <div class="container">
+    <div class="section-head">
+      <p class="eyebrow reveal"><span class="dot"></span> Start here</p>
+      <h2 class="h2" data-split="words">New to investing? Begin with these.</h2>
+    </div>
+    <div class="cards">
+      <article class="card tilt reveal"><span class="num">01</span><h3>Set your goals</h3><p>Write down what you are saving for and when you will need the money.</p></article>
+      <article class="card tilt reveal" data-delay="100"><span class="num">02</span><h3>Protect first</h3><p>Build an emergency fund and review life and health cover.</p></article>
+      <article class="card tilt reveal" data-delay="200"><span class="num">03</span><h3>Automate a SIP</h3><p>Start small, increase over time, and let consistency do the work.</p></article>
+    </div>
+  </div>
+</section>
+
+<!-- NEWSLETTER -->
+<section class="section">
+  <div class="container">
+    <div class="cta cta-compact">
+      <div class="cta-glow"></div>
+      <h2 class="h2 center" data-split="words">Get new articles in your inbox.</h2>
+      <p class="muted center reveal">One short email when we publish. No spam, unsubscribe anytime.</p>
+      <form class="form newsletter reveal" novalidate>
+        <div class="news-row">
+          <input type="email" name="email" required placeholder="you@example.com" aria-label="Email address" />
+          <button class="btn btn-primary" type="submit">Subscribe <span class="arrow">→</span></button>
+        </div>
+        <p class="form-note" role="status"></p>
+      </form>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer class="footer">
+  <div class="container">
+    <div class="foot-grid">
+      <div class="foot-brand">
+        <a href="index.html" class="logo" aria-label="Stackly home"><img src="assets/stackly-logo.webp" alt="Stackly" class="logo-img" /></a>
+        <p>Investment and wealth planning for families and professionals in Salem and beyond.</p>
+      </div>
+      <div><h4>Company</h4><a href="about.html">About</a><a href="blog.html">Blog</a><a href="contact.html">Contact</a><a href="login.html">Client Portal</a></div>
+      <div><h4>Services</h4><a href="services.html#investment">Investments</a><a href="services.html#goals">Goal planning</a><a href="services.html#retirement">Retirement</a><a href="services.html#tax">Tax</a></div>
+      <div><h4>Visit</h4><p>Stackly, Salem,<br />Tamil Nadu, India</p><p>hello@stackly.in</p><p>Mon – Sat, 10:00 – 18:00</p></div>
+    </div>
+    <p class="disc">Investments in securities markets are subject to market risks. Read all related documents carefully. Articles are for general information and are not personal investment advice.</p>
+    <p class="copy">© <span id="yr">2026</span> Stackly, Salem. All rights reserved.</p>
+  </div>
+</footer>
+<script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,724 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Sign In | Stackly Investment & Wealth Planning, Salem</title>
+    <meta name="description" content="Sign in to your Stackly Wealth Planning account. Access your portfolio, track SIP investments, and manage your wealth goals in Salem.">
+
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="portal.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Sora:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Sora', 'system-ui', 'sans-serif'],
+                        serif: ['Instrument Serif', 'Georgia', 'serif']
+                    },
+                    colors: {
+                        bg: '#07090d',
+                        bg2: '#0c1016',
+                        surface: '#10151d',
+                        line: 'rgba(255, 255, 255, 0.08)',
+                        accent: '#c8f169',
+                        accent2: '#5ee6b8',
+                        gold: '#e8c987',
+                        muted: '#8b95a5'
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        :root {
+            --bg: #07090d;
+            --bg2: #0c1016;
+            --surface: #10151d;
+            --line: rgba(255, 255, 255, 0.08);
+            --text: #eef1f5;
+            --muted: #8b95a5;
+            --accent: #c8f169;
+            --accent2: #5ee6b8;
+            --gold: #e8c987;
+            --radius: 22px;
+            --serif: 'Instrument Serif', Georgia, serif;
+            --sans: 'Sora', system-ui, sans-serif;
+        }
+
+        * { box-sizing: border-box; }
+        body {
+            font-family: var(--sans);
+            background-color: var(--bg);
+            color: var(--text);
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+            min-height: 100vh;
+        }
+
+        ::-webkit-scrollbar { width: 5px; }
+        ::-webkit-scrollbar-track { background: var(--bg); }
+        ::-webkit-scrollbar-thumb { background: #1a2230; border-radius: 10px; }
+
+        /* Ambient Orbs */
+        .orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.35;
+            pointer-events: none;
+        }
+        .orb-a {
+            width: 440px; height: 440px;
+            background: rgba(94, 230, 184, 0.18);
+            top: -100px; right: -80px;
+            animation: orbFloat 14s ease-in-out infinite alternate;
+        }
+        .orb-b {
+            width: 420px; height: 420px;
+            background: rgba(200, 241, 105, 0.14);
+            bottom: -100px; left: -80px;
+            animation: orbFloat 16s ease-in-out infinite alternate-reverse;
+        }
+        @keyframes orbFloat {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(30px, 40px); }
+        }
+
+
+
+        /* Brand logo */
+        .logo-mark { display: inline-grid; gap: 3px; width: 22px; vertical-align: middle; }
+        .logo-mark i { display: block; height: 4.5px; border-radius: 3px; background: var(--accent); }
+        .logo-mark i:nth-child(2) { width: 80%; opacity: .75; }
+        .logo-mark i:nth-child(3) { width: 55%; opacity: .45; }
+
+        /* Left Cinematic Panel */
+        .auth-left {
+            background: radial-gradient(circle at 20% 30%, rgba(20, 27, 38, 0.95), var(--bg));
+            position: relative;
+            overflow: hidden;
+            border-right: 1px solid var(--line);
+        }
+
+        /* Auth Form Card */
+        .auth-card {
+            background: rgba(16, 21, 29, 0.7);
+            border: 1px solid var(--line);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-radius: 20px;
+        }
+
+        /* Input Styles */
+        .auth-input {
+            background: #0c1016;
+            border: 1px solid var(--line);
+            color: var(--text);
+            transition: all 0.25s ease;
+            width: 100%;
+            padding: 0.85rem 1rem 0.85rem 2.75rem;
+            border-radius: 12px;
+            font-size: 0.88rem;
+            outline: none;
+        }
+        .auth-input::placeholder { color: #526075; }
+        .auth-input:focus {
+            border-color: var(--accent);
+            background: #0f151e;
+            box-shadow: 0 0 0 3px rgba(200, 241, 105, 0.15);
+        }
+        .auth-input.input-error {
+            border-color: #ef4444 !important;
+            box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.15) !important;
+            background: rgba(239, 68, 68, 0.03) !important;
+        }
+        .auth-input.input-success {
+            border-color: var(--accent) !important;
+            box-shadow: 0 0 0 3px rgba(200, 241, 105, 0.15) !important;
+        }
+
+        /* Role Switcher */
+        .role-switcher {
+            background: #0c1016;
+            border: 1px solid var(--line);
+            border-radius: 999px;
+            padding: 4px;
+            display: flex;
+            position: relative;
+        }
+        .role-pill {
+            position: absolute;
+            top: 4px;
+            bottom: 4px;
+            background: var(--accent);
+            border-radius: 999px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 2px 10px rgba(200, 241, 105, 0.35);
+        }
+        .role-btn {
+            flex: 1;
+            padding: 0.6rem 1rem;
+            font-size: 0.76rem;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+            color: var(--muted);
+            z-index: 2;
+            position: relative;
+            text-align: center;
+            cursor: pointer;
+            border: none;
+            background: transparent;
+            transition: color 0.3s;
+        }
+        .role-btn.active { color: #07090d; font-weight: 700; }
+
+        /* Submit Button */
+        .btn-submit {
+            width: 100%;
+            padding: 0.95rem 2rem;
+            background: var(--accent);
+            color: #07090d;
+            font-weight: 700;
+            font-size: 0.88rem;
+            letter-spacing: 0.04em;
+            border: none;
+            border-radius: 999px;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.2, 0.7, 0.1, 1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.6rem;
+            box-shadow: 0 8px 25px -6px rgba(200, 241, 105, 0.4);
+        }
+        .btn-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 14px 32px -6px rgba(200, 241, 105, 0.6);
+            background: #d4f682;
+        }
+        .btn-submit:active { transform: translateY(0); }
+        .btn-submit:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* Alert Boxes */
+        .alert-error {
+            background: rgba(239, 68, 68, 0.1);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            border-radius: 12px;
+            padding: 0.75rem 1rem;
+            display: flex;
+            align-items: flex-start;
+            gap: 0.6rem;
+            font-size: 0.8rem;
+            color: #fca5a5;
+        }
+        .alert-success {
+            background: rgba(200, 241, 105, 0.12);
+            border: 1px solid rgba(200, 241, 105, 0.3);
+            border-radius: 12px;
+            padding: 0.75rem 1rem;
+            display: flex;
+            align-items: flex-start;
+            gap: 0.6rem;
+            font-size: 0.8rem;
+            color: #c8f169;
+        }
+
+        /* Error Text */
+        .error-text {
+            font-size: 0.72rem;
+            color: #ef4444;
+            margin-top: 0.35rem;
+            margin-left: 0.25rem;
+            display: none;
+        }
+        .error-text.show { display: block; }
+
+        /* Nav link */
+        .nav-link {
+            font-size: 0.82rem;
+            color: var(--muted);
+            transition: color 0.25s;
+        }
+        .nav-link:hover { color: var(--text); }
+
+        /* Floating particles */
+        .particle {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: var(--accent);
+            border-radius: 50%;
+            opacity: 0.5;
+            animation: particleFloat 9s infinite ease-in-out;
+        }
+        @keyframes particleFloat {
+            0%, 100% { transform: translateY(0) translateX(0); opacity: 0; }
+            30% { opacity: 0.7; }
+            70% { opacity: 0.3; }
+            100% { transform: translateY(-130px) translateX(35px); opacity: 0; }
+        }
+
+        /* Dot pulse */
+        .dot {
+            display: inline-block;
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: var(--accent);
+            box-shadow: 0 0 10px var(--accent);
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse { 50% { opacity: 0.35; } }
+
+        /* Spinner */
+        .spinner {
+            width: 16px; height: 16px;
+            border: 2px solid rgba(7, 9, 13, 0.25);
+            border-top-color: #07090d;
+            border-radius: 50%;
+            animation: spin 0.6s linear infinite;
+            display: none;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        .divider { height: 1px; background: var(--line); }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(18px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .fade-up { animation: fadeInUp 0.55s cubic-bezier(0.16, 1, 0.3, 1) both; }
+        .delay-100 { animation-delay: 0.1s; }
+        .delay-200 { animation-delay: 0.2s; }
+        .delay-300 { animation-delay: 0.3s; }
+    </style>
+</head>
+<body>
+
+    <!-- Full-screen split layout -->
+    <div class="flex min-h-screen relative">
+
+        <!-- Left: Cinematic Wealth Panel (hidden on mobile) -->
+        <div class="hidden lg:flex lg:w-1/2 auth-left flex-col justify-between p-12 xl:p-16 relative">
+            <div class="orb orb-a"></div>
+            <div class="orb orb-b"></div>
+
+            <!-- Ambient particles -->
+            <div class="particle" style="left:18%;bottom:18%;animation-delay:0s;"></div>
+            <div class="particle" style="left:42%;bottom:28%;animation-delay:1.5s;"></div>
+            <div class="particle" style="left:68%;bottom:14%;animation-delay:3.2s;"></div>
+            <div class="particle" style="left:82%;bottom:36%;animation-delay:0.8s;"></div>
+            <div class="particle" style="left:32%;bottom:45%;animation-delay:2.1s;"></div>
+
+            <!-- Logo Top -->
+            <div class="relative z-10">
+                <a href="index.html" class="inline-flex items-center gap-3 group">
+                    <img src="assets/stackly-logo.webp" alt="Stackly" class="logo-img" />
+                </a>
+            </div>
+
+            <!-- Center Content -->
+            <div class="relative z-10 max-w-lg">
+                <div class="inline-flex items-center gap-2 text-xs uppercase tracking-widest text-[#8b95a5] mb-5 px-3.5 py-1.5 rounded-full border border-[rgba(255,255,255,0.08)] bg-[rgba(255,255,255,0.02)]">
+                    <span class="dot"></span> Investment &amp; Wealth Planning · Salem
+                </div>
+                <h1 class="text-4xl xl:text-5xl font-normal leading-[1.08] tracking-tight mb-6 font-serif text-[#eef1f5]">
+                    Stack your wealth, <br>
+                    <span class="italic text-[#c8f169]">one smart layer</span> at a time.
+                </h1>
+                <p class="text-sm text-[#8b95a5] leading-relaxed max-w-md">
+                    Stackly builds clear, goal-driven investment plans for families and professionals in Salem and beyond. Disciplined portfolio management, transparent advisory, and zero noise.
+                </p>
+
+                <!-- Mini Portfolio Visual Card -->
+                <div class="mt-8 p-5 rounded-2xl border border-[rgba(255,255,255,0.08)] bg-[rgba(16,21,29,0.7)] backdrop-blur-md max-w-sm">
+                    <div class="flex justify-between items-center text-xs mb-3">
+                        <span class="text-[#eef1f5] font-medium">Salem Goal Plan Allocation</span>
+                        <span class="text-[10px] uppercase tracking-wider text-[#c8f169] bg-[#c8f169]/10 px-2 py-0.5 rounded-full">Active</span>
+                    </div>
+                    <div class="space-y-2.5">
+                        <div>
+                            <div class="flex justify-between text-[11px] text-[#8b95a5] mb-1">
+                                <span>Retirement Strategy</span>
+                                <span class="text-white font-medium">78%</span>
+                            </div>
+                            <div class="h-1.5 bg-white/5 rounded-full overflow-hidden">
+                                <div class="h-full bg-[#c8f169] rounded-full" style="width: 78%"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between text-[11px] text-[#8b95a5] mb-1">
+                                <span>Child Higher Education</span>
+                                <span class="text-white font-medium">54%</span>
+                            </div>
+                            <div class="h-1.5 bg-white/5 rounded-full overflow-hidden">
+                                <div class="h-full bg-[#5ee6b8] rounded-full" style="width: 54%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Stats Bottom -->
+            <div class="relative z-10 grid grid-cols-3 gap-6 border-t border-[rgba(255,255,255,0.08)] pt-6">
+                <div>
+                    <div class="text-2xl font-bold text-[#eef1f5]">100%</div>
+                    <div class="text-[11px] text-[#8b95a5] mt-0.5">Fee Transparency</div>
+                </div>
+                <div>
+                    <div class="text-2xl font-bold text-[#c8f169]">&lt;24h</div>
+                    <div class="text-[11px] text-[#8b95a5] mt-0.5">Salem Response</div>
+                </div>
+                <div>
+                    <div class="text-2xl font-bold text-[#5ee6b8]">₹500Cr+</div>
+                    <div class="text-[11px] text-[#8b95a5] mt-0.5">Wealth Planned</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Right: Auth Form -->
+        <div class="w-full lg:w-1/2 flex flex-col min-h-screen bg-[#07090d] relative z-10">
+
+            <!-- Top Navigation -->
+            <header class="sticky top-0 bg-[#07090d]/85 backdrop-blur-md z-30 flex justify-between items-center px-6 md:px-12 py-5 border-b border-[rgba(255,255,255,0.08)]">
+                <a href="index.html" class="lg:hidden inline-flex items-center gap-2">
+                    <img src="assets/stackly-logo.webp" alt="Stackly" class="logo-img" />
+                </a>
+                <div class="hidden lg:flex items-center gap-6">
+                    <a href="index.html" class="nav-link">Home</a>
+                    <a href="services.html" class="nav-link">Services</a>
+                    <a href="about.html" class="nav-link">About</a>
+                    <a href="blog.html" class="nav-link">Blog</a>
+                    <a href="contact.html" class="nav-link">Contact</a>
+                </div>
+                <div class="flex items-center gap-3 ml-auto lg:ml-0">
+                    <span class="text-xs text-[#8b95a5] hidden sm:inline">New to Stackly?</span>
+                    <a href="signup.html" class="text-xs font-semibold px-4 py-2 rounded-full border border-[#c8f169]/40 text-[#c8f169] hover:bg-[#c8f169] hover:text-[#07090d] transition-all duration-300">
+                        Create Account
+                    </a>
+                </div>
+            </header>
+
+            <!-- Form Area -->
+            <main class="flex-1 flex items-center justify-center px-6 md:px-12 py-10">
+                <div class="w-full max-w-md fade-up">
+
+                    <!-- Header -->
+                    <div class="mb-8">
+                        <div class="inline-flex items-center gap-2 text-[10px] uppercase tracking-widest text-[#8b95a5] mb-2 font-medium">
+                            <span class="dot"></span> Client &amp; Advisor Portal
+                        </div>
+                        <h2 class="text-3xl font-serif font-normal text-[#eef1f5] mb-2 tracking-tight">Welcome Back</h2>
+                        <p class="text-xs sm:text-sm text-[#8b95a5]">Sign in to access your portfolio, SIP mandates &amp; wealth advisory.</p>
+                    </div>
+
+                    <!-- Role Switcher -->
+                    <div class="role-switcher mb-7 fade-up delay-100">
+                        <div class="role-pill" id="role-pill" style="left:4px; width: calc(50% - 8px);"></div>
+                        <button type="button" class="role-btn active" id="btn-user" onclick="selectRole('user')">
+                            <i class="fa-solid fa-user mr-1.5 text-xs"></i> Client / Investor
+                        </button>
+                        <button type="button" class="role-btn" id="btn-admin" onclick="selectRole('admin')">
+                            <i class="fa-solid fa-shield-halved mr-1.5 text-xs"></i> Advisor / Admin
+                        </button>
+                    </div>
+
+                    <!-- Alert Boxes -->
+                    <div class="alert-error mb-5 fade-up delay-200" id="error-alert" style="display:none;">
+                        <i class="fa-solid fa-triangle-exclamation mt-0.5 shrink-0"></i>
+                        <span id="error-text">Please fix the errors below.</span>
+                    </div>
+                    <div class="alert-success mb-5 fade-up delay-200" id="success-alert" style="display:none;">
+                        <i class="fa-solid fa-circle-check mt-0.5 shrink-0"></i>
+                        <span id="success-text">Sign in successful! Redirecting...</span>
+                    </div>
+
+                    <!-- Form -->
+                    <form id="login-form" onsubmit="handleLoginSubmit(event)" novalidate class="space-y-5 fade-up delay-200">
+                        <input type="hidden" id="login-role" value="user">
+
+                        <!-- Email -->
+                        <div>
+                            <label for="login-email" class="block text-[11px] font-semibold uppercase tracking-wider text-[#8b95a5] mb-2">Registered Email Address</label>
+                            <div class="relative">
+                                <i class="fa-solid fa-envelope absolute left-3.5 top-1/2 -translate-y-1/2 text-[#526075] text-sm"></i>
+                                <input type="email" id="login-email" class="auth-input" placeholder="client@example.com" autocomplete="email">
+                            </div>
+                            <div class="error-text" id="email-error"><i class="fa-solid fa-circle-xmark mr-1"></i><span id="email-error-msg"></span></div>
+                        </div>
+
+                        <!-- Password -->
+                        <div>
+                            <div class="flex justify-between items-center mb-2">
+                                <label for="login-password" class="block text-[11px] font-semibold uppercase tracking-wider text-[#8b95a5]">Account Password</label>
+                                <a href="404.html" class="text-[11px] text-[#8b95a5] hover:text-[#c8f169] transition-colors">Forgot Password?</a>
+                            </div>
+                            <div class="relative">
+                                <i class="fa-solid fa-lock absolute left-3.5 top-1/2 -translate-y-1/2 text-[#526075] text-sm"></i>
+                                <input type="password" id="login-password" class="auth-input pr-11" placeholder="••••••••" autocomplete="current-password">
+                                <button type="button" onclick="togglePwd('login-password', this)" class="absolute right-3.5 top-1/2 -translate-y-1/2 text-[#526075] hover:text-[#c8f169] transition-colors focus:outline-none" aria-label="Toggle password visibility">
+                                    <i class="fa-solid fa-eye text-sm" id="login-pwd-icon"></i>
+                                </button>
+                            </div>
+                            <div class="error-text" id="password-error"><i class="fa-solid fa-circle-xmark mr-1"></i><span id="password-error-msg"></span></div>
+                        </div>
+
+                        <!-- Remember -->
+                        <div class="flex items-center justify-between">
+                            <label class="flex items-center gap-2.5 cursor-pointer select-none text-sm text-[#8b95a5]">
+                                <input type="checkbox" id="remember-me" class="w-4 h-4 rounded border-[#1a2230] bg-[#0c1016] accent-[#c8f169] focus:outline-none">
+                                <span class="text-xs">Remember this device</span>
+                            </label>
+                            <span class="text-[11px] text-[#526075] flex items-center gap-1">
+                                <i class="fa-solid fa-shield text-[10px] text-[#5ee6b8]"></i> 256-bit SSL
+                            </span>
+                        </div>
+
+                        <!-- Divider -->
+                        <div class="divider"></div>
+
+                        <!-- Submit -->
+                        <button type="submit" class="btn-submit" id="login-btn">
+                            <span class="spinner" id="login-spinner"></span>
+                            <span id="login-btn-text">Sign In to Portfolio</span>
+                            <i class="fa-solid fa-arrow-right text-xs" id="login-btn-icon"></i>
+                        </button>
+                    </form>
+
+                    <!-- Bottom Links -->
+                    <div class="mt-8 text-center text-xs text-[#8b95a5] fade-up delay-300">
+                        Don't have a wealth account yet?
+                        <a href="signup.html" class="text-[#c8f169] font-semibold hover:underline ml-1">Create Account</a>
+                    </div>
+
+                    <!-- Quick advisory note -->
+                    <div class="mt-6 p-3.5 rounded-xl border border-[rgba(255,255,255,0.06)] bg-[rgba(255,255,255,0.015)] text-center text-[11px] text-[#8b95a5] fade-up delay-300">
+                        Need in-person advisory in Salem? Visit us or call <span class="text-white">+91 00000 00000</span>
+                    </div>
+                </div>
+            </main>
+
+            <!-- Footer -->
+            <footer class="px-6 md:px-12 py-5 border-t border-[rgba(255,255,255,0.08)] flex flex-wrap justify-between items-center gap-3 text-[11px] text-[#8b95a5]">
+                <p>&copy; 2026 Stackly Investment &amp; Wealth Planning. Salem, Tamil Nadu, India.</p>
+                <div class="flex gap-4">
+                    <a href="index.html" class="hover:text-white transition-colors">Home</a>
+                    <a href="services.html" class="hover:text-white transition-colors">Services</a>
+                    <a href="contact.html" class="hover:text-white transition-colors">Contact</a>
+                </div>
+            </footer>
+        </div>
+    </div>
+
+    <script>
+        let currentRole = 'user';
+
+        function selectRole(role) {
+            currentRole = role;
+            document.getElementById('login-role').value = role;
+            const pill = document.getElementById('role-pill');
+            const btnUser = document.getElementById('btn-user');
+            const btnAdmin = document.getElementById('btn-admin');
+
+            if (role === 'user') {
+                pill.style.left = '4px';
+                pill.style.width = 'calc(50% - 8px)';
+                btnUser.classList.add('active');
+                btnAdmin.classList.remove('active');
+                document.getElementById('login-btn-text').textContent = 'Sign In to Portfolio';
+            } else {
+                pill.style.left = 'calc(50% + 4px)';
+                pill.style.width = 'calc(50% - 8px)';
+                btnAdmin.classList.add('active');
+                btnUser.classList.remove('active');
+                document.getElementById('login-btn-text').textContent = 'Sign In as Advisor';
+            }
+        }
+
+        function togglePwd(id, btn) {
+            const input = document.getElementById(id);
+            const icon = document.getElementById('login-pwd-icon');
+            if (input.type === 'password') {
+                input.type = 'text';
+                icon.classList.replace('fa-eye', 'fa-eye-slash');
+            } else {
+                input.type = 'password';
+                icon.classList.replace('fa-eye-slash', 'fa-eye');
+            }
+        }
+
+        function validateEmail(email) {
+            return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+        }
+
+        function showFieldError(inputId, errorId, msgId, msg) {
+            const input = document.getElementById(inputId);
+            const errorDiv = document.getElementById(errorId);
+            const msgEl = document.getElementById(msgId);
+            input.classList.add('input-error');
+            input.classList.remove('input-success');
+            msgEl.textContent = msg;
+            errorDiv.classList.add('show');
+        }
+
+        function showFieldSuccess(inputId, errorId) {
+            const input = document.getElementById(inputId);
+            const errorDiv = document.getElementById(errorId);
+            input.classList.remove('input-error');
+            input.classList.add('input-success');
+            errorDiv.classList.remove('show');
+        }
+
+        function clearFieldState(inputId, errorId) {
+            const input = document.getElementById(inputId);
+            const errorDiv = document.getElementById(errorId);
+            input.classList.remove('input-error', 'input-success');
+            errorDiv.classList.remove('show');
+        }
+
+        // Live validation
+        document.getElementById('login-email').addEventListener('blur', function() {
+            const val = this.value.trim();
+            if (!val) showFieldError('login-email', 'email-error', 'email-error-msg', 'Email address is required.');
+            else if (!validateEmail(val)) showFieldError('login-email', 'email-error', 'email-error-msg', 'Please enter a valid email address.');
+            else showFieldSuccess('login-email', 'email-error');
+        });
+        document.getElementById('login-email').addEventListener('input', function() {
+            if (this.classList.contains('input-error')) {
+                const val = this.value.trim();
+                if (val && validateEmail(val)) showFieldSuccess('login-email', 'email-error');
+            }
+        });
+
+        document.getElementById('login-password').addEventListener('blur', function() {
+            const val = this.value;
+            if (!val) showFieldError('login-password', 'password-error', 'password-error-msg', 'Password is required.');
+            else if (val.length < 6) showFieldError('login-password', 'password-error', 'password-error-msg', 'Password must be at least 6 characters.');
+            else showFieldSuccess('login-password', 'password-error');
+        });
+        document.getElementById('login-password').addEventListener('input', function() {
+            if (this.classList.contains('input-error') && this.value.length >= 6) {
+                showFieldSuccess('login-password', 'password-error');
+            }
+        });
+
+        function handleLoginSubmit(e) {
+            e.preventDefault();
+            const email = document.getElementById('login-email').value.trim();
+            const password = document.getElementById('login-password').value;
+            const role = currentRole;
+
+            let valid = true;
+
+            if (!email) {
+                showFieldError('login-email', 'email-error', 'email-error-msg', 'Email address is required.');
+                valid = false;
+            } else if (!validateEmail(email)) {
+                showFieldError('login-email', 'email-error', 'email-error-msg', 'Please enter a valid email address.');
+                valid = false;
+            } else {
+                showFieldSuccess('login-email', 'email-error');
+            }
+
+            if (!password) {
+                showFieldError('login-password', 'password-error', 'password-error-msg', 'Password is required.');
+                valid = false;
+            } else if (password.length < 6) {
+                showFieldError('login-password', 'password-error', 'password-error-msg', 'Password must be at least 6 characters.');
+                valid = false;
+            } else {
+                showFieldSuccess('login-password', 'password-error');
+            }
+
+            if (!valid) {
+                const errAlert = document.getElementById('error-alert');
+                document.getElementById('error-text').textContent = 'Please fix the errors above before signing in.';
+                errAlert.style.display = 'flex';
+                setTimeout(() => errAlert.style.display = 'none', 5000);
+                return;
+            }
+
+            document.getElementById('error-alert').style.display = 'none';
+
+            // Loading state
+            const btn = document.getElementById('login-btn');
+            const spinner = document.getElementById('login-spinner');
+            const btnText = document.getElementById('login-btn-text');
+            const btnIcon = document.getElementById('login-btn-icon');
+            btn.disabled = true;
+            spinner.style.display = 'block';
+            btnText.textContent = 'Verifying Credentials...';
+            btnIcon.style.display = 'none';
+
+            // Store session
+            localStorage.setItem('stackly_user_email', email);
+            localStorage.setItem('stackly_user_role', role);
+            localStorage.setItem('userEmail', email);
+            localStorage.setItem('email', email);
+
+            // Resolve and store user name
+            let userName = '';
+            let userPhone = '';
+            try {
+                const users = JSON.parse(localStorage.getItem('stackly_registered_users') || '{}');
+                const registered = users[email.toLowerCase()];
+                if (registered && registered.name) {
+                    userName = registered.name;
+                    if (registered.phone) userPhone = registered.phone;
+                }
+            } catch (err) {}
+
+            if (!userName) {
+                const storedEmail = localStorage.getItem('stackly_user_email');
+                const storedName = localStorage.getItem('stackly_user_name') || localStorage.getItem('name');
+                if (storedEmail && storedEmail.toLowerCase() === email.toLowerCase() && storedName) {
+                    userName = storedName;
+                }
+            }
+
+            if (!userName) {
+                const local = email.split('@')[0].replace(/[._-]/g, ' ');
+                userName = local.split(' ').filter(Boolean).map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
+            }
+
+            localStorage.setItem('stackly_user_name', userName || 'Client');
+            localStorage.setItem('name', userName || 'Client');
+            if (userPhone) {
+                localStorage.setItem('stackly_user_phone', userPhone);
+            }
+
+            const successAlert = document.getElementById('success-alert');
+            document.getElementById('success-text').textContent = `Welcome back! Redirecting to your ${role === 'admin' ? 'Advisor' : 'Client'} dashboard...`;
+            successAlert.style.display = 'flex';
+
+            setTimeout(() => {
+                window.location.href = role === 'admin' ? 'admin dashboard.html' : 'user dashboard.html';
+            }, 1200);
+        }
+
+        // Check for pre-fill from signup redirect
+        document.addEventListener('DOMContentLoaded', () => {
+            const params = new URLSearchParams(window.location.search);
+            if (params.get('email')) document.getElementById('login-email').value = params.get('email');
+            if (params.get('msg')) {
+                const successAlert = document.getElementById('success-alert');
+                document.getElementById('success-text').textContent = decodeURIComponent(params.get('msg'));
+                successAlert.style.display = 'flex';
+                setTimeout(() => successAlert.style.display = 'none', 5000);
+            }
+        });
+    </script>
+</body>
+</html>

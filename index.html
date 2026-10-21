@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<title>Stackly | Investment & Wealth Planning, Salem</title>
+<meta name="description" content="Stackly is a Salem-based investment and wealth planning firm. Goal-based planning, portfolio management, retirement and tax strategy." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Sora:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+<div class="glow" aria-hidden="true"></div>
+<div class="grain" aria-hidden="true"></div>
+
+<!-- NAV -->
+<header class="nav" id="nav">
+  <a href="index.html" class="logo" aria-label="Stackly home">
+    <img src="assets/stackly-logo.webp" alt="Stackly" class="logo-img" />
+  </a>
+  <nav class="nav-links" id="navLinks">
+    <a href="index.html" class="active" aria-current="page">Home</a>
+    <a href="services.html">Services</a>
+    <a href="about.html">About</a>
+    <a href="blog.html">Blog</a>
+    <a href="contact.html">Contact</a>
+  </nav>
+  <a href="login.html" class="btn btn-sm btn-light nav-cta">Login</a>
+  <button class="burger" id="burger" aria-label="Menu"><span></span><span></span></button>
+</header>
+
+<main>
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="orb orb-a"></div>
+  <div class="orb orb-b"></div>
+
+  <div class="container hero-inner">
+   <div class="hero-copy">
+    <p class="eyebrow reveal"><span class="dot"></span> Investment &amp; Wealth Planning · Salem</p>
+
+    <h1 class="hero-title" aria-label="Stack your wealth, one smart layer at a time">
+      <span class="line" data-split="chars">Stack your wealth</span>
+      <span class="line"><span data-split="chars">one&nbsp;</span><em class="rotator" id="rotator" aria-live="polite"></em><span class="caret"></span></span>
+    </h1>
+
+    <p class="hero-sub reveal" data-delay="500">
+      Stackly builds clear, goal-driven investment plans for families and professionals in Salem and beyond. No jargon, no noise. Just a disciplined path from where you are to where you want to be.
+    </p>
+
+    <div class="hero-actions reveal" data-delay="650">
+      <a href="contact.html" class="btn btn-primary">Start planning <span class="arrow">→</span></a>
+      <a href="#calculator" class="btn btn-ghost">Try the SIP calculator</a>
+    </div>
+   </div>
+
+   <div class="hero-media reveal" data-delay="300">
+    <img src="assets/hero-visual.webp" width="640" height="700" alt="Illustration of investment blocks stacking upward with a rising trend line" fetchpriority="high" decoding="async" />
+    <div class="hero-card reveal" data-delay="800">
+      <div class="hc-head">
+        <span>Sample goal plan</span>
+        <span class="pill">Illustrative</span>
+      </div>
+      <div class="bars">
+        <div class="bar"><label>Retirement</label><div class="track"><i style="--w:78%"></i></div><b>78%</b></div>
+        <div class="bar"><label>Child education</label><div class="track"><i style="--w:54%"></i></div><b>54%</b></div>
+        <div class="bar"><label>Home purchase</label><div class="track"><i style="--w:36%"></i></div><b>36%</b></div>
+      </div>
+    </div>
+   </div>
+  </div>
+
+  <div class="scroll-hint" aria-hidden="true"><span></span></div>
+</section>
+
+<!-- MARQUEE -->
+<section class="marquee" aria-hidden="true">
+  <div class="marquee-track">
+    <span>Goal-based planning</span><span>✦</span>
+    <span>Mutual funds &amp; SIPs</span><span>✦</span>
+    <span>Retirement strategy</span><span>✦</span>
+    <span>Tax-smart investing</span><span>✦</span>
+    <span>Insurance review</span><span>✦</span>
+    <span>Portfolio rebalancing</span><span>✦</span>
+    <span>Goal-based planning</span><span>✦</span>
+    <span>Mutual funds &amp; SIPs</span><span>✦</span>
+    <span>Retirement strategy</span><span>✦</span>
+    <span>Tax-smart investing</span><span>✦</span>
+    <span>Insurance review</span><span>✦</span>
+    <span>Portfolio rebalancing</span><span>✦</span>
+  </div>
+</section>
+
+<!-- COMMITMENTS -->
+<section class="stats">
+  <div class="container stats-grid">
+    <div class="stat reveal"><b><span class="count" data-to="100">0</span>%</b><p>Fee transparency, always in writing</p></div>
+    <div class="stat reveal" data-delay="100"><b><span class="count" data-to="24">0</span>h</b><p>Response time on every enquiry</p></div>
+    <div class="stat reveal" data-delay="200"><b><span class="count" data-to="5">0</span></b><p>Life-goal categories we plan around</p></div>
+    <div class="stat reveal" data-delay="300"><b><span class="count" data-to="1">0</span>:1</b><p>A dedicated advisor for your family</p></div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section class="section" id="services">
+  <div class="container">
+    <div class="section-head">
+      <p class="eyebrow reveal"><span class="dot"></span> What we do</p>
+      <h2 class="h2" data-split="words">Everything your money needs, planned in one place.</h2>
+    </div>
+
+    <div class="cards">
+      <article class="card tilt reveal">
+        <span class="num">01</span>
+        <div class="icon"><svg viewBox="0 0 24 24"><path d="M3 17l6-6 4 4 8-8"/><path d="M15 7h6v6"/></svg></div>
+        <h3>Investment Management</h3>
+        <p>Diversified portfolios across equity, debt and gold, built around your risk comfort and reviewed on a fixed schedule.</p>
+      </article>
+      <article class="card tilt reveal" data-delay="100">
+        <span class="num">02</span>
+        <div class="icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4"/><path d="M12 3v3M12 18v3M3 12h3M18 12h3"/></svg></div>
+        <h3>Goal-Based Planning</h3>
+        <p>Education, marriage, home, travel. Every goal gets a target amount, a timeline and a monthly number that makes it real.</p>
+      </article>
+      <article class="card tilt reveal" data-delay="200">
+        <span class="num">03</span>
+        <div class="icon"><svg viewBox="0 0 24 24"><path d="M12 3c4 0 7 3 7 7 0 5-7 11-7 11S5 15 5 10c0-4 3-7 7-7z"/><circle cx="12" cy="10" r="2.5"/></svg></div>
+        <h3>Retirement Planning</h3>
+        <p>Work out how much you need, how long it must last, and how to build an income that keeps pace with inflation.</p>
+      </article>
+      <article class="card tilt reveal">
+        <span class="num">04</span>
+        <div class="icon"><svg viewBox="0 0 24 24"><path d="M6 3h9l4 4v14H6z"/><path d="M14 3v5h5M9 13h6M9 17h6"/></svg></div>
+        <h3>Tax Optimisation</h3>
+        <p>Use the right instruments and timing to keep more of what you earn, within the rules, with clear documentation.</p>
+      </article>
+      <article class="card tilt reveal" data-delay="100">
+        <span class="num">05</span>
+        <div class="icon"><svg viewBox="0 0 24 24"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/><path d="M9 12l2 2 4-4"/></svg></div>
+        <h3>Risk &amp; Insurance Review</h3>
+        <p>Protect the plan itself. We review life and health cover so one bad year cannot undo years of saving.</p>
+      </article>
+      <article class="card tilt reveal" data-delay="200">
+        <span class="num">06</span>
+        <div class="icon"><svg viewBox="0 0 24 24"><path d="M4 20V10M10 20V4M16 20v-8M22 20H2"/></svg></div>
+        <h3>Business Owner Wealth</h3>
+        <p>Separate business and personal money, plan for surplus cash, and build wealth outside the business.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- GOALS GALLERY -->
+<section class="section gallery-section" id="goals">
+  <div class="container">
+    <div class="section-head">
+      <p class="eyebrow reveal"><span class="dot"></span> Goals we plan for</p>
+      <h2 class="h2" data-split="words">Every milestone gets its own plan.</h2>
+    </div>
+    <div class="gallery">
+      <figure class="shot reveal">
+        <img src="assets/goal-home.webp" width="600" height="440" alt="A home with warm lit windows at dusk" loading="lazy" decoding="async" />
+        <figcaption><b>Your own home</b><span>Down payment and EMI planning</span></figcaption>
+      </figure>
+      <figure class="shot reveal" data-delay="120">
+        <img src="assets/goal-education.webp" width="600" height="440" alt="A graduation cap on a stack of books" loading="lazy" decoding="async" />
+        <figcaption><b>Children's education</b><span>Fund learning without stress</span></figcaption>
+      </figure>
+      <figure class="shot reveal" data-delay="240">
+        <img src="assets/goal-retirement.webp" width="600" height="440" alt="A calm sunset over hills with a bench under a tree" loading="lazy" decoding="async" />
+        <figcaption><b>Retire on your terms</b><span>An income that lasts</span></figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section class="section section-dark" id="process">
+  <div class="container">
+    <div class="section-head">
+      <p class="eyebrow reveal"><span class="dot"></span> How it works</p>
+      <h2 class="h2" data-split="words">A simple process. Four clear steps.</h2>
+    </div>
+
+    <div class="steps">
+      <div class="step reveal">
+        <div class="step-n">1</div>
+        <h3>Discover</h3>
+        <p>A relaxed conversation about your income, family, goals and worries.</p>
+      </div>
+      <div class="step reveal" data-delay="120">
+        <div class="step-n">2</div>
+        <h3>Design</h3>
+        <p>We map goals to numbers and design a plan you can read in plain language.</p>
+      </div>
+      <div class="step reveal" data-delay="240">
+        <div class="step-n">3</div>
+        <h3>Deploy</h3>
+        <p>Investments are set up, SIPs automated and paperwork handled for you.</p>
+      </div>
+      <div class="step reveal" data-delay="360">
+        <div class="step-n">4</div>
+        <h3>Review</h3>
+        <p>Regular check-ins and rebalancing so the plan moves with your life.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CALCULATOR -->
+<section class="section" id="calculator">
+  <div class="container calc">
+    <div class="calc-copy">
+      <p class="eyebrow reveal"><span class="dot"></span> SIP calculator</p>
+      <h2 class="h2" data-split="words">See what steady investing can build.</h2>
+      <p class="muted reveal">Move the sliders to estimate the future value of a monthly SIP. This is an illustration using an assumed return, not a promise. Actual returns vary and market investments carry risk.</p>
+    </div>
+
+    <div class="calc-box reveal" data-delay="150">
+      <div class="field">
+        <div class="field-top"><label for="amt">Monthly investment</label><output id="amtOut">₹10,000</output></div>
+        <input type="range" id="amt" min="1000" max="200000" step="500" value="10000" />
+      </div>
+      <div class="field">
+        <div class="field-top"><label for="rate">Expected annual return</label><output id="rateOut">12%</output></div>
+        <input type="range" id="rate" min="4" max="20" step="0.5" value="12" />
+      </div>
+      <div class="field">
+        <div class="field-top"><label for="yrs">Time period</label><output id="yrsOut">15 years</output></div>
+        <input type="range" id="yrs" min="1" max="40" step="1" value="15" />
+      </div>
+
+      <div class="result">
+        <div class="donut" aria-hidden="true">
+          <svg viewBox="0 0 120 120">
+            <circle cx="60" cy="60" r="48" class="d-bg"/>
+            <circle cx="60" cy="60" r="48" class="d-fg" id="donut" pathLength="100"/>
+          </svg>
+          <div class="donut-c"><small>Total value</small><b id="total">₹0</b></div>
+        </div>
+        <ul class="legend">
+          <li><i class="k1"></i><span>Invested</span><b id="invested">₹0</b></li>
+          <li><i class="k2"></i><span>Estimated gains</span><b id="gains">₹0</b></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHY -->
+<section class="section section-dark" id="why">
+  <div class="container why">
+    <div>
+      <p class="eyebrow reveal"><span class="dot"></span> Why Stackly</p>
+      <h2 class="h2" data-split="words">Advice that works for you, not for commissions.</h2>
+      <p class="muted reveal">Salem families deserve the same quality of planning that big-city clients expect, delivered with local understanding and long-term care.</p>
+      <a href="contact.html" class="btn btn-light reveal">Talk to an advisor <span class="arrow">→</span></a>
+    </div>
+    <ul class="why-list">
+      <li class="reveal"><b>Plain language</b><span>Every recommendation comes with a reason you can understand and question.</span></li>
+      <li class="reveal" data-delay="100"><b>Client-first conduct</b><span>Costs and conflicts are disclosed up front, before you commit to anything.</span></li>
+      <li class="reveal" data-delay="200"><b>Whole-picture view</b><span>Investments, insurance, tax and goals are planned together, not in silos.</span></li>
+      <li class="reveal" data-delay="300"><b>Rooted in Salem</b><span>Local presence, face-to-face meetings and support in Tamil and English.</span></li>
+    </ul>
+  </div>
+</section>
+
+<!-- CTA / CONTACT -->
+<section class="section" id="contact">
+  <div class="container">
+    <div class="cta">
+      <div class="cta-glow"></div>
+      <h2 class="h2 center" data-split="words">Ready to stack your future?</h2>
+      <p class="muted center reveal">Share a few details and we will reach out within one working day to schedule a free first conversation.</p>
+
+      <form class="form reveal" id="form" novalidate>
+        <div class="row">
+          <label>Full name<input type="text" name="name" required placeholder="Your name" /></label>
+          <label>Phone<input type="tel" name="phone" required placeholder="10-digit mobile number" /></label>
+        </div>
+        <div class="row">
+          <label>Email<input type="email" name="email" placeholder="you@example.com" /></label>
+          <label>I'm interested in
+            <select name="topic">
+              <option>Investment planning</option>
+              <option>Retirement planning</option>
+              <option>Goal-based SIPs</option>
+              <option>Tax planning</option>
+              <option>Insurance review</option>
+            </select>
+          </label>
+        </div>
+        <label>Message<textarea name="msg" rows="3" placeholder="Tell us about your goals"></textarea></label>
+        <button class="btn btn-primary" type="submit">Request a call <span class="arrow">→</span></button>
+        <p class="form-note" id="formNote" role="status"></p>
+      </form>
+
+      <figure class="map reveal">
+        <img src="assets/salem-map.webp" width="760" height="320" alt="Map showing the Stackly office in Salem, Tamil Nadu" loading="lazy" decoding="async" />
+      </figure>
+
+      <div class="contact-cards">
+        <div><small>Office</small><b>Stackly, Salem,<br />Tamil Nadu, India</b></div>
+        <div><small>Email</small><b>hello@stackly.in</b></div>
+        <div><small>Hours</small><b>Mon – Sat<br />10:00 – 18:00</b></div>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer class="footer">
+  <div class="container">
+    <div class="foot-grid">
+      <div class="foot-brand">
+        <a href="index.html" class="logo" aria-label="Stackly home"><img src="assets/stackly-logo.webp" alt="Stackly" class="logo-img" /></a>
+        <p>Investment and wealth planning for families and professionals in Salem and beyond.</p>
+      </div>
+      <div><h4>Company</h4><a href="about.html">About</a><a href="blog.html">Blog</a><a href="contact.html">Contact</a><a href="login.html">Client Portal</a></div>
+      <div><h4>Services</h4><a href="services.html#investment">Investments</a><a href="services.html#goals">Goal planning</a><a href="services.html#retirement">Retirement</a><a href="services.html#tax">Tax</a></div>
+      <div><h4>Visit</h4><p>Stackly, Salem,<br />Tamil Nadu, India</p><p>hello@stackly.in</p><p>Mon – Sat, 10:00 – 18:00</p></div>
+    </div>
+    <p class="disc">Investments in securities markets are subject to market risks. Read all related documents carefully. Illustrations on this site are for information only and are not guarantees of returns.</p>
+    <p class="copy">© <span id="yr">2026</span> Stackly, Salem. All rights reserved.</p>
+  </div>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>

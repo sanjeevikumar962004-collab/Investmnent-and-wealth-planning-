@@ -1,0 +1,1510 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Client Wealth Dashboard | Stackly Investment & Wealth Planning, Salem</title>
+    <meta name="description" content="Manage your Stackly Wealth Planning portfolios, active SIP mandates, life goal trackers, advisory reports, and profile settings.">
+
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="portal.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Sora:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Sora', 'system-ui', 'sans-serif'],
+                        serif: ['Instrument Serif', 'Georgia', 'serif']
+                    },
+                    colors: {
+                        bg: '#07090d',
+                        bg2: '#0c1016',
+                        panel: '#0c1016',
+                        'panel-hover': '#10151d',
+                        surface: '#10151d',
+                        line: 'rgba(255, 255, 255, 0.08)',
+                        accent: '#c8f169',
+                        accent2: '#5ee6b8',
+                        gold: '#e8c987',
+                        muted: '#8b95a5'
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        :root {
+            --bg: #07090d;
+            --bg2: #0c1016;
+            --panel: #0c1016;
+            --panel-hover: #10151d;
+            --border: rgba(255, 255, 255, 0.08);
+            --border-hover: rgba(200, 241, 105, 0.25);
+            --text: #eef1f5;
+            --muted: #8b95a5;
+            --accent: #c8f169;
+            --accent2: #5ee6b8;
+            --gold: #e8c987;
+            --radius: 20px;
+            --serif: 'Instrument Serif', Georgia, serif;
+            --sans: 'Sora', system-ui, sans-serif;
+        }
+
+        * { box-sizing: border-box; }
+        body {
+            font-family: var(--sans);
+            background: var(--bg);
+            color: var(--text);
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        ::-webkit-scrollbar { width: 5px; height: 5px; }
+        ::-webkit-scrollbar-track { background: var(--bg); }
+        ::-webkit-scrollbar-thumb { background: #1a2230; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: #263348; }
+
+        /* Brand logo */
+        .logo-mark { display: inline-grid; gap: 3px; width: 22px; vertical-align: middle; }
+        .logo-mark i { display: block; height: 4.5px; border-radius: 3px; background: var(--accent); }
+        .logo-mark i:nth-child(2) { width: 80%; opacity: .75; }
+        .logo-mark i:nth-child(3) { width: 55%; opacity: .45; }
+
+        /* Sidebar */
+        .sidebar {
+            width: 240px;
+            min-height: 100vh;
+            background: var(--panel);
+            border-right: 1px solid var(--border);
+            display: flex;
+            flex-direction: column;
+            position: fixed;
+            top: 0; left: 0;
+            z-index: 40;
+            transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .sidebar-logo {
+            padding: 1.25rem 1.25rem;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .nav-item {
+            display: flex; align-items: center; gap: 0.75rem;
+            padding: 0.65rem 1.15rem; color: var(--muted);
+            font-size: 0.8rem; font-weight: 500;
+            border-radius: 10px; margin: 3px 0.5rem;
+            transition: all 0.2s ease; cursor: pointer; text-decoration: none;
+        }
+        .nav-item:hover { background: rgba(255, 255, 255, 0.05); color: var(--text); }
+        .nav-item.active { background: var(--accent); color: #07090d; font-weight: 700; box-shadow: 0 4px 14px rgba(200, 241, 105, 0.25); }
+        .nav-item.active i { color: #07090d; }
+        .nav-item i { width: 16px; text-align: center; font-size: 0.85rem; }
+        .nav-section-label {
+            font-size: 0.62rem; font-weight: 700; text-transform: uppercase;
+            letter-spacing: 0.14em; color: #526075; padding: 0.75rem 1.15rem 0.3rem;
+        }
+
+        /* Main Content */
+        .main-content {
+            margin-left: 240px;
+            min-height: 100vh;
+            display: flex; flex-direction: column;
+            transition: margin-left 0.3s ease;
+        }
+
+        /* Topbar */
+        .topbar {
+            height: 64px; border-bottom: 1px solid var(--border);
+            display: flex; align-items: center; padding: 0 1.5rem; gap: 1rem;
+            background: rgba(7, 9, 13, 0.85); backdrop-filter: blur(14px);
+            position: sticky; top: 0; z-index: 30;
+        }
+
+        /* Cards */
+        .stat-card {
+            background: var(--panel); border: 1px solid var(--border);
+            border-radius: 18px; padding: 1.25rem 1.5rem;
+            transition: all 0.3s ease;
+        }
+        .stat-card:hover { border-color: var(--border-hover); background: var(--panel-hover); }
+        .panel-card {
+            background: var(--panel); border: 1px solid var(--border);
+            border-radius: 18px; transition: all 0.3s ease;
+        }
+        .panel-card:hover { border-color: var(--border-hover); }
+
+        /* Badge */
+        .badge {
+            display: inline-flex; align-items: center;
+            padding: 0.2rem 0.65rem; border-radius: 9999px;
+            font-size: 0.65rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em;
+        }
+        .badge-green { background: rgba(200, 241, 105, 0.12); color: #c8f169; border: 1px solid rgba(200, 241, 105, 0.25); }
+        .badge-yellow { background: rgba(232, 201, 135, 0.12); color: #e8c987; border: 1px solid rgba(232, 201, 135, 0.25); }
+        .badge-red { background: rgba(239, 68, 68, 0.12); color: #ef4444; border: 1px solid rgba(239, 68, 68, 0.2); }
+        .badge-blue { background: rgba(94, 230, 184, 0.12); color: #5ee6b8; border: 1px solid rgba(94, 230, 184, 0.25); }
+        .badge-gray { background: rgba(139, 149, 165, 0.12); color: #8b95a5; border: 1px solid rgba(139, 149, 165, 0.2); }
+
+        /* Table */
+        .data-table { width: 100%; border-collapse: collapse; }
+        .data-table th {
+            text-align: left; padding: 0.75rem 1rem;
+            font-size: 0.68rem; font-weight: 700; text-transform: uppercase;
+            letter-spacing: 0.1em; color: var(--muted); border-bottom: 1px solid var(--border);
+        }
+        .data-table td {
+            padding: 0.85rem 1rem; font-size: 0.82rem;
+            border-bottom: 1px solid var(--border); color: #d1d5db;
+        }
+        .data-table tr:last-child td { border-bottom: none; }
+        .data-table tbody tr { transition: background 0.2s ease; }
+        .data-table tbody tr:hover { background: rgba(255, 255, 255, 0.02); }
+
+        /* Buttons */
+        .btn-primary {
+            background: var(--accent); color: #07090d;
+            padding: 0.55rem 1.25rem; border-radius: 999px;
+            font-size: 0.76rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em;
+            border: none; cursor: pointer; transition: all 0.3s ease;
+            display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem;
+            box-shadow: 0 4px 14px rgba(200, 241, 105, 0.25);
+        }
+        .btn-primary:hover { background: #d4f682; transform: translateY(-1px); box-shadow: 0 8px 22px rgba(200, 241, 105, 0.45); }
+        .btn-ghost {
+            background: rgba(255, 255, 255, 0.02); color: var(--muted);
+            padding: 0.55rem 1rem; border-radius: 999px;
+            font-size: 0.76rem; font-weight: 600;
+            border: 1px solid var(--border); cursor: pointer;
+            transition: all 0.2s ease; display: inline-flex; align-items: center; justify-content: center; gap: 0.4rem;
+        }
+        .btn-ghost:hover { color: #fff; border-color: rgba(255, 255, 255, 0.25); background: rgba(255, 255, 255, 0.05); }
+
+        /* Avatar */
+        .avatar { width: 36px; height: 36px; border-radius: 50%; background: var(--accent); display: flex; align-items: center; justify-content: center; font-size: 0.74rem; font-weight: 800; color: #07090d; flex-shrink: 0; }
+
+        /* Progress */
+        .progress-track { background: rgba(255, 255, 255, 0.06); height: 6px; border-radius: 6px; overflow: hidden; }
+        .progress-fill { height: 100%; border-radius: 6px; background: var(--accent); transition: width 1.2s ease; }
+
+        /* Wishlist/Goal Item */
+        .wish-item {
+            display: flex; align-items: center; gap: 1rem;
+            padding: 1.1rem 0; border-bottom: 1px solid var(--border);
+        }
+        .wish-item:last-child { border-bottom: none; }
+        @media (max-width: 640px) {
+            .wish-item {
+                flex-wrap: wrap;
+                align-items: flex-start;
+                gap: 0.75rem;
+            }
+            .wish-item-info {
+                min-width: 0;
+                flex: 1 1 calc(100% - 5.5rem);
+            }
+            .wish-item-actions {
+                width: 100%;
+                display: flex !important;
+                flex-direction: row !important;
+                align-items: center;
+                gap: 0.5rem;
+                margin-top: 0.25rem;
+            }
+            .wish-item-actions .btn-primary {
+                flex: 1;
+                justify-content: center;
+                text-align: center;
+                white-space: nowrap;
+            }
+        }
+
+        /* Input */
+        .form-input {
+            width: 100%; background: #07090d; border: 1px solid var(--border);
+            color: #fff; border-radius: 12px; padding: 0.75rem 1rem;
+            font-size: 0.85rem; outline: none; transition: all 0.3s ease;
+            font-family: inherit;
+        }
+        .form-input::placeholder { color: #526075; }
+        .form-input:focus { border-color: var(--accent); background: #0c1016; box-shadow: 0 0 0 3px rgba(200, 241, 105, 0.15); }
+        .form-input.input-error { border-color: #ef4444 !important; background: rgba(239, 68, 68, 0.03); }
+        .form-input.input-success { border-color: var(--accent) !important; }
+        .form-label { display: block; font-size: 0.65rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.12em; color: var(--muted); margin-bottom: 0.5rem; }
+        .error-msg { font-size: 0.7rem; color: #ef4444; margin-top: 0.3rem; display: none; }
+        .error-msg.show { display: block; }
+
+        /* Mobile */
+        .mobile-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.8); backdrop-filter: blur(4px); z-index: 35; }
+        @media (max-width: 1023px) {
+            .sidebar { transform: translateX(-240px); }
+            .sidebar.open { transform: translateX(0); }
+            .main-content { margin-left: 0; }
+            .mobile-overlay.show { display: block; }
+        }
+
+        /* Tabs */
+        .tab-btn { padding: 0.5rem 1rem; font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted); border-bottom: 2px solid transparent; transition: all 0.2s ease; cursor: pointer; background: none; border-left: none; border-right: none; border-top: none; }
+        .tab-btn.active { color: var(--accent); border-bottom-color: var(--accent); }
+        .tab-btn:hover { color: #fff; }
+
+        /* Tab Panel */
+        .tab-panel { display: none; }
+        .tab-panel.active { display: block; }
+
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .fade-up { animation: fadeInUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) both; }
+        .delay-1 { animation-delay: 0.05s; } .delay-2 { animation-delay: 0.1s; } .delay-3 { animation-delay: 0.15s; }
+
+        /* Order / Mandate track steps */
+        .order-step { display: flex; flex-direction: column; align-items: center; flex: 1; }
+        .order-step-circle { width: 32px; height: 32px; border-radius: 50%; border: 2px solid #243042; display: flex; align-items: center; justify-content: center; font-size: 0.7rem; color: #526075; transition: all 0.3s; }
+        .order-step.done .order-step-circle { background: var(--accent); border-color: var(--accent); color: #07090d; }
+        .order-step.current .order-step-circle { border-color: #f59e0b; color: #f59e0b; background: rgba(245, 158, 11, 0.1); }
+        .order-step-line { flex: 1; height: 1px; background: #243042; margin: 0 4px; margin-top: -16px; }
+        .order-step-line.done { background: var(--accent); }
+
+        /* Strategy Card */
+        .product-card {
+            background: #0c1016; border: 1px solid var(--border);
+            border-radius: 16px; overflow: hidden;
+            transition: all 0.3s ease;
+        }
+        .product-card:hover { border-color: var(--border-hover); transform: translateY(-2px); }
+    </style>
+</head>
+<body>
+
+    <div class="mobile-overlay" id="mobile-overlay" onclick="closeSidebar()"></div>
+
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-logo">
+            <button onclick="window.location.href='index.html'" class="flex items-center gap-2 hover:opacity-85 transition-opacity bg-transparent border-none p-0 cursor-pointer text-left focus:outline-none" title="Stackly Home">
+                <img src="assets/stackly-logo.webp" alt="Stackly" class="logo-img" style="height:26px;width:auto;" />
+            </button>
+            <button onclick="closeSidebar()" class="lg:hidden text-gray-400 hover:text-white transition-colors focus:outline-none text-sm p-1">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+        </div>
+
+        <nav class="flex-1 overflow-y-auto py-3">
+            <div class="nav-section-label">My Portfolio</div>
+            <a href="javascript:void(0)" class="nav-item active" id="nav-overview" onclick="switchTab('overview')">
+                <i class="fa-solid fa-chart-pie"></i> Overview
+            </a>
+            <a href="javascript:void(0)" class="nav-item" id="nav-orders" onclick="switchTab('orders')">
+                <i class="fa-solid fa-wallet"></i> Portfolios &amp; SIPs
+                <span class="ml-auto text-[9px] bg-[#c8f169]/15 text-[#c8f169] px-2 py-0.5 rounded-full font-bold">4</span>
+            </a>
+            <a href="javascript:void(0)" class="nav-item" id="nav-wishlist" onclick="switchTab('wishlist')">
+                <i class="fa-solid fa-bullseye"></i> Goal Plans
+                <span class="ml-auto text-[9px] bg-white/10 text-gray-300 px-2 py-0.5 rounded-full font-bold" id="wishlist-count-badge">3</span>
+            </a>
+
+            <div class="nav-section-label mt-2">Advisory &amp; Planning</div>
+            <a href="javascript:void(0)" class="nav-item" id="nav-catalog" onclick="switchTab('catalog')">
+                <i class="fa-solid fa-layer-group"></i> Wealth Strategies
+            </a>
+            <a href="javascript:void(0)" class="nav-item" id="nav-blog" onclick="switchTab('blog')">
+                <i class="fa-solid fa-book-open"></i> Insights &amp; Guides
+            </a>
+
+            <div class="nav-section-label mt-2">Account &amp; Advisory</div>
+            <a href="javascript:void(0)" class="nav-item" id="nav-support" onclick="switchTab('support')">
+                <i class="fa-solid fa-headset"></i> Advisory Desk
+                <span class="ml-auto text-[9px] bg-[#5ee6b8]/15 text-[#5ee6b8] px-2 py-0.5 rounded-full font-bold">1</span>
+            </a>
+            <a href="javascript:void(0)" class="nav-item" id="nav-profile" onclick="switchTab('profile')">
+                <i class="fa-solid fa-user-shield"></i> Profile &amp; Security
+            </a>
+        </nav>
+
+        <div class="border-t border-[rgba(255,255,255,0.08)] p-4 bg-[#07090d]/60">
+            <div class="flex items-center gap-3">
+                <div class="avatar text-xs font-black" id="user-avatar-sidebar">RK</div>
+                <div class="flex-1 min-w-0">
+                    <div class="text-xs font-semibold truncate text-[#eef1f5]" id="sidebar-name">Client User</div>
+                    <div class="text-[10px] text-[#8b95a5] truncate" id="sidebar-email">client@example.com</div>
+                </div>
+                <button onclick="confirmSignOut(event)" title="Sign Out of Portal" class="text-[#8b95a5] hover:text-[#ef4444] transition-colors text-sm bg-transparent border-none p-1.5 cursor-pointer">
+                    <i class="fa-solid fa-right-from-bracket"></i>
+                </button>
+            </div>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <div class="main-content" id="main-content">
+
+        <!-- Topbar -->
+        <header class="topbar">
+            <button onclick="toggleSidebar()" class="lg:hidden text-gray-400 hover:text-white transition-colors focus:outline-none mr-2 p-1" aria-label="Toggle navigation">
+                <i class="fa-solid fa-bars text-sm"></i>
+            </button>
+            <div class="text-sm font-semibold text-[#eef1f5] hidden sm:flex items-center gap-2" id="topbar-title">
+                <span>Client Portfolio Portal</span>
+                <span class="text-[10px] text-[#8b95a5] font-normal">· Salem Central Advisory</span>
+            </div>
+
+            <div class="ml-auto flex items-center gap-3">
+                <button onclick="switchTab('catalog')" class="btn-ghost hidden sm:inline-flex text-xs">
+                    <i class="fa-solid fa-magnifying-glass-chart text-xs text-[#c8f169]"></i> Browse Strategies
+                </button>
+                <div class="avatar cursor-pointer" onclick="switchTab('profile')" id="user-avatar-top" title="Account Settings">RK</div>
+            </div>
+        </header>
+
+        <!-- Page Content -->
+        <div class="p-4 md:p-6 lg:p-8 flex-1">
+
+            <!-- OVERVIEW TAB -->
+            <div id="tab-overview" class="tab-panel active">
+                <!-- Welcome Banner -->
+                <div class="panel-card p-5 md:p-6 mb-6 fade-up relative overflow-hidden bg-gradient-to-r from-[#0c1016] via-[#10151d] to-[#0c1016]">
+                    <div class="flex flex-wrap items-center justify-between gap-4 relative z-10">
+                        <div>
+                            <div class="inline-flex items-center gap-2 text-[10px] uppercase tracking-widest text-[#8b95a5] mb-1">
+                                <span class="w-1.5 h-1.5 rounded-full bg-[#c8f169]"></span> Salem Wealth Management Account
+                            </div>
+                            <h1 class="text-2xl md:text-3xl font-serif text-[#eef1f5] font-normal tracking-tight">
+                                Welcome back, <span class="italic text-[#c8f169]" id="welcome-name">Client</span>
+                            </h1>
+                            <p class="text-xs sm:text-sm text-[#8b95a5] mt-1 max-w-xl leading-relaxed">
+                                Your mutual fund portfolio and recurring SIPs are disciplined and progressing toward your life goals.
+                            </p>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <button onclick="switchTab('orders')" class="btn-primary text-xs">
+                                <i class="fa-solid fa-eye text-xs"></i> View Holdings
+                            </button>
+                            <button onclick="switchTab('support')" class="btn-ghost text-xs">
+                                <i class="fa-solid fa-headset text-xs"></i> Consult Advisor
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Stat Cards -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+                    <div class="stat-card fade-up delay-1">
+                        <div class="flex justify-between items-start mb-2">
+                            <span class="text-[11px] font-semibold uppercase tracking-wider text-[#8b95a5]">Total Portfolio Value</span>
+                            <span class="p-2 rounded-lg bg-[#c8f169]/10 text-[#c8f169] text-xs"><i class="fa-solid fa-chart-line"></i></span>
+                        </div>
+                        <div class="text-2xl font-bold text-white tracking-tight">₹48,25,000</div>
+                        <div class="text-[11px] text-[#c8f169] mt-1 flex items-center gap-1 font-medium">
+                            <i class="fa-solid fa-arrow-trend-up"></i> +14.2% annualized IRR
+                        </div>
+                    </div>
+
+                    <div class="stat-card fade-up delay-2">
+                        <div class="flex justify-between items-start mb-2">
+                            <span class="text-[11px] font-semibold uppercase tracking-wider text-[#8b95a5]">Monthly SIP Inflows</span>
+                            <span class="p-2 rounded-lg bg-[#5ee6b8]/10 text-[#5ee6b8] text-xs"><i class="fa-solid fa-coins"></i></span>
+                        </div>
+                        <div class="text-2xl font-bold text-white tracking-tight">₹65,000<span class="text-xs text-[#8b95a5] font-normal">/mo</span></div>
+                        <div class="text-[11px] text-[#8b95a5] mt-1 flex items-center gap-1">
+                            <span class="text-white font-medium">4 active fund mandates</span>
+                        </div>
+                    </div>
+
+                    <div class="stat-card fade-up delay-3">
+                        <div class="flex justify-between items-start mb-2">
+                            <span class="text-[11px] font-semibold uppercase tracking-wider text-[#8b95a5]">Life Goals on Track</span>
+                            <span class="p-2 rounded-lg bg-[#e8c987]/10 text-[#e8c987] text-xs"><i class="fa-solid fa-bullseye"></i></span>
+                        </div>
+                        <div class="text-2xl font-bold text-white tracking-tight">3 of 3</div>
+                        <div class="text-[11px] text-[#e8c987] mt-1 flex items-center gap-1 font-medium">
+                            <span>Retirement, Education &amp; Home</span>
+                        </div>
+                    </div>
+
+                    <div class="stat-card fade-up delay-3">
+                        <div class="flex justify-between items-start mb-2">
+                            <span class="text-[11px] font-semibold uppercase tracking-wider text-[#8b95a5]">Dedicated Advisor</span>
+                            <span class="p-2 rounded-lg bg-white/5 text-white text-xs"><i class="fa-solid fa-user-tie"></i></span>
+                        </div>
+                        <div class="text-base font-bold text-white tracking-tight">R. Srinivasan, CFP</div>
+                        <div class="text-[11px] text-[#8b95a5] mt-1 flex items-center gap-1">
+                            <span>Salem Central Firm Branch</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Mandate Progress & Asset Allocation Grid -->
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
+                    <!-- SIP Mandate Status -->
+                    <div class="panel-card p-5 lg:col-span-2">
+                        <div class="flex justify-between items-center mb-4 pb-3 border-b border-[rgba(255,255,255,0.08)]">
+                            <div>
+                                <h3 class="text-sm font-bold text-white">Current SIP Cycle Status</h3>
+                                <p class="text-[11px] text-[#8b95a5]">Monthly Auto-Debit Mandate · October 2026 Cycle</p>
+                            </div>
+                            <span class="badge badge-green">Mandate Active</span>
+                        </div>
+
+                        <!-- Progress Steps -->
+                        <div class="flex items-center justify-between my-6 px-2">
+                            <div class="order-step done">
+                                <div class="order-step-circle"><i class="fa-solid fa-check"></i></div>
+                                <span class="text-[10px] text-[#eef1f5] font-medium mt-2">NACH Approved</span>
+                            </div>
+                            <div class="order-step-line done"></div>
+                            <div class="order-step done">
+                                <div class="order-step-circle"><i class="fa-solid fa-check"></i></div>
+                                <span class="text-[10px] text-[#eef1f5] font-medium mt-2">KYC Verified</span>
+                            </div>
+                            <div class="order-step-line done"></div>
+                            <div class="order-step done">
+                                <div class="order-step-circle"><i class="fa-solid fa-check"></i></div>
+                                <span class="text-[10px] text-[#eef1f5] font-medium mt-2">Debited (₹65,000)</span>
+                            </div>
+                            <div class="order-step-line done"></div>
+                            <div class="order-step done">
+                                <div class="order-step-circle"><i class="fa-solid fa-check"></i></div>
+                                <span class="text-[10px] text-[#c8f169] font-bold mt-2">Units Allotted</span>
+                            </div>
+                        </div>
+
+                        <div class="p-3.5 rounded-xl bg-white/[0.02] border border-white/5 flex flex-wrap items-center justify-between gap-3 text-xs">
+                            <div class="flex items-center gap-3">
+                                <span class="p-2 rounded-lg bg-[#c8f169]/10 text-[#c8f169] text-xs"><i class="fa-solid fa-receipt"></i></span>
+                                <div>
+                                    <div class="text-white font-medium">October Consolidated Account Statement (CAS)</div>
+                                    <div class="text-[10px] text-[#8b95a5]">Generated Oct 18, 2026 · CAMS/KFintech Synced</div>
+                                </div>
+                            </div>
+                            <button onclick="showWebsiteModal('Your consolidated investment statement for October 2026 has been downloaded.')" class="btn-ghost text-xs py-1.5 px-3">
+                                <i class="fa-solid fa-download text-xs"></i> Download Statement
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Target Goals Allocation -->
+                    <div class="panel-card p-5">
+                        <div class="flex justify-between items-center mb-4 pb-3 border-b border-[rgba(255,255,255,0.08)]">
+                            <h3 class="text-sm font-bold text-white">Goal Progress</h3>
+                            <button onclick="switchTab('wishlist')" class="text-[11px] text-[#c8f169] hover:underline">View All</button>
+                        </div>
+                        <div class="space-y-4">
+                            <div>
+                                <div class="flex justify-between text-xs mb-1">
+                                    <span class="text-white font-medium">Retirement Corpus (Age 55)</span>
+                                    <span class="text-[#c8f169] font-bold">78%</span>
+                                </div>
+                                <div class="progress-track"><div class="progress-fill" style="width: 78%"></div></div>
+                                <div class="text-[10px] text-[#8b95a5] mt-1">₹1.87 Cr / Target ₹2.40 Cr</div>
+                            </div>
+                            <div>
+                                <div class="flex justify-between text-xs mb-1">
+                                    <span class="text-white font-medium">Child Overseas Education</span>
+                                    <span class="text-[#5ee6b8] font-bold">54%</span>
+                                </div>
+                                <div class="progress-track"><div class="progress-fill" style="width: 54%; background: #5ee6b8;"></div></div>
+                                <div class="text-[10px] text-[#8b95a5] mt-1">₹40.5 L / Target ₹75.0 L</div>
+                            </div>
+                            <div>
+                                <div class="flex justify-between text-xs mb-1">
+                                    <span class="text-white font-medium">Salem Home Down Payment</span>
+                                    <span class="text-[#e8c987] font-bold">36%</span>
+                                </div>
+                                <div class="progress-track"><div class="progress-fill" style="width: 36%; background: #e8c987;"></div></div>
+                                <div class="text-[10px] text-[#8b95a5] mt-1">₹18.0 L / Target ₹50.0 L</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Recent Portfolio Transactions Table -->
+                <div class="panel-card p-5">
+                    <div class="flex flex-wrap justify-between items-center gap-3 mb-4 pb-3 border-b border-[rgba(255,255,255,0.08)]">
+                        <div>
+                            <h3 class="text-sm font-bold text-white">Recent Portfolio Transactions</h3>
+                            <p class="text-[11px] text-[#8b95a5]">SIP Debits, Lumpsum Allocations &amp; Rebalancing</p>
+                        </div>
+                        <button onclick="switchTab('orders')" class="btn-ghost text-xs">
+                            View All Transactions
+                        </button>
+                    </div>
+
+                    <div class="overflow-x-auto">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Folio / Scheme Name</th>
+                                    <th>Asset Class</th>
+                                    <th>Date</th>
+                                    <th>Amount</th>
+                                    <th>Units</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <div class="font-medium text-white">Stackly Bluechip Index Fund</div>
+                                        <div class="text-[10px] text-[#8b95a5]">Folio: STK-8849201</div>
+                                    </td>
+                                    <td><span class="badge badge-blue">Equity Large Cap</span></td>
+                                    <td class="text-xs text-[#8b95a5]">15 Oct 2026</td>
+                                    <td class="text-xs font-bold text-white">₹25,000</td>
+                                    <td class="text-xs text-[#8b95a5]">184.22</td>
+                                    <td><span class="badge badge-green">Allotted</span></td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="font-medium text-white">Salem Growth &amp; Multi-Cap Strategy</div>
+                                        <div class="text-[10px] text-[#8b95a5]">Folio: STK-7731920</div>
+                                    </td>
+                                    <td><span class="badge badge-blue">Equity Flexi Cap</span></td>
+                                    <td class="text-xs text-[#8b95a5]">15 Oct 2026</td>
+                                    <td class="text-xs font-bold text-white">₹20,000</td>
+                                    <td class="text-xs text-[#8b95a5]">142.08</td>
+                                    <td><span class="badge badge-green">Allotted</span></td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="font-medium text-white">High Quality Corporate Debt Ladder</div>
+                                        <div class="text-[10px] text-[#8b95a5]">Folio: STK-6612849</div>
+                                    </td>
+                                    <td><span class="badge badge-gray">Debt &amp; Bonds</span></td>
+                                    <td class="text-xs text-[#8b95a5]">15 Oct 2026</td>
+                                    <td class="text-xs font-bold text-white">₹15,000</td>
+                                    <td class="text-xs text-[#8b95a5]">498.71</td>
+                                    <td><span class="badge badge-green">Allotted</span></td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="font-medium text-white">Sovereign Gold Bond &amp; SGB Yield</div>
+                                        <div class="text-[10px] text-[#8b95a5]">Folio: STK-9901428</div>
+                                    </td>
+                                    <td><span class="badge badge-yellow">Gold Sovereign</span></td>
+                                    <td class="text-xs text-[#8b95a5]">15 Oct 2026</td>
+                                    <td class="text-xs font-bold text-white">₹5,000</td>
+                                    <td class="text-xs text-[#8b95a5]">0.78g</td>
+                                    <td><span class="badge badge-green">Allotted</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TAB 2: PORTFOLIOS & SIPS (tab-orders) -->
+            <div id="tab-orders" class="tab-panel">
+                <div class="panel-card p-5 mb-6">
+                    <div class="flex flex-wrap justify-between items-center gap-4 pb-4 border-b border-[rgba(255,255,255,0.08)]">
+                        <div>
+                            <h2 class="text-lg font-bold text-white">My Portfolios &amp; Active SIP Mandates</h2>
+                            <p class="text-xs text-[#8b95a5]">Review active schemes, automated monthly debits, and current holdings.</p>
+                        </div>
+                        <button onclick="switchTab('catalog')" class="btn-primary text-xs">
+                            <i class="fa-solid fa-plus text-xs"></i> Start New SIP
+                        </button>
+                    </div>
+
+                    <!-- Filter tabs -->
+                    <div class="flex gap-2 my-4 border-b border-[rgba(255,255,255,0.08)] pb-2 overflow-x-auto">
+                        <button class="tab-btn active text-xs">All Investments (4)</button>
+                        <button class="tab-btn text-xs">Active SIPs (4)</button>
+                        <button class="tab-btn text-xs">Lumpsum Holdings</button>
+                        <button class="tab-btn text-xs">Tax Saving (ELSS)</button>
+                    </div>
+
+                    <div class="space-y-4">
+                        <!-- Investment 1 -->
+                        <div class="p-4 rounded-xl border border-[rgba(255,255,255,0.08)] bg-white/[0.015] flex flex-wrap items-center justify-between gap-4">
+                            <div class="flex items-center gap-3.5">
+                                <div class="w-10 h-10 rounded-xl bg-[#c8f169]/10 text-[#c8f169] flex items-center justify-center font-bold text-sm">
+                                    <i class="fa-solid fa-chart-pie"></i>
+                                </div>
+                                <div>
+                                    <div class="text-sm font-bold text-white">Stackly Bluechip Index Strategy</div>
+                                    <div class="text-xs text-[#8b95a5]">Folio #STK-8849201 · Monthly SIP on 15th · Next: 15 Nov 2026</div>
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-6 text-right">
+                                <div>
+                                    <div class="text-sm font-bold text-white">₹25,000/mo</div>
+                                    <div class="text-[11px] text-[#c8f169] font-medium">+16.4% IRR</div>
+                                </div>
+                                <span class="badge badge-green">Active</span>
+                                <button onclick="showWebsiteModal('Portfolio details for Stackly Bluechip Index Strategy: Current NAV ₹142.10, Total Invested: ₹12,50,000, Current Value: ₹15,48,200.')" class="btn-ghost text-xs">
+                                    Details
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Investment 2 -->
+                        <div class="p-4 rounded-xl border border-[rgba(255,255,255,0.08)] bg-white/[0.015] flex flex-wrap items-center justify-between gap-4">
+                            <div class="flex items-center gap-3.5">
+                                <div class="w-10 h-10 rounded-xl bg-[#5ee6b8]/10 text-[#5ee6b8] flex items-center justify-center font-bold text-sm">
+                                    <i class="fa-solid fa-arrow-trend-up"></i>
+                                </div>
+                                <div>
+                                    <div class="text-sm font-bold text-white">Salem Growth &amp; Multi-Cap Strategy</div>
+                                    <div class="text-xs text-[#8b95a5]">Folio #STK-7731920 · Monthly SIP on 15th · Next: 15 Nov 2026</div>
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-6 text-right">
+                                <div>
+                                    <div class="text-sm font-bold text-white">₹20,000/mo</div>
+                                    <div class="text-[11px] text-[#5ee6b8] font-medium">+18.2% IRR</div>
+                                </div>
+                                <span class="badge badge-green">Active</span>
+                                <button onclick="showWebsiteModal('Portfolio details for Salem Growth Strategy: Current NAV ₹84.50, Total Invested: ₹9,80,000, Current Value: ₹12,42,000.')" class="btn-ghost text-xs">
+                                    Details
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Investment 3 -->
+                        <div class="p-4 rounded-xl border border-[rgba(255,255,255,0.08)] bg-white/[0.015] flex flex-wrap items-center justify-between gap-4">
+                            <div class="flex items-center gap-3.5">
+                                <div class="w-10 h-10 rounded-xl bg-gray-500/10 text-gray-400 flex items-center justify-center font-bold text-sm">
+                                    <i class="fa-solid fa-shield-halved"></i>
+                                </div>
+                                <div>
+                                    <div class="text-sm font-bold text-white">High Quality Corporate Debt Ladder</div>
+                                    <div class="text-xs text-[#8b95a5]">Folio #STK-6612849 · Monthly SIP on 15th · Next: 15 Nov 2026</div>
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-6 text-right">
+                                <div>
+                                    <div class="text-sm font-bold text-white">₹15,000/mo</div>
+                                    <div class="text-[11px] text-[#8b95a5] font-medium">+8.1% IRR</div>
+                                </div>
+                                <span class="badge badge-green">Active</span>
+                                <button onclick="showWebsiteModal('Portfolio details for Corporate Debt Ladder: Safe capital preservation, Total Invested: ₹8,00,000, Current Value: ₹8,95,400.')" class="btn-ghost text-xs">
+                                    Details
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Investment 4 -->
+                        <div class="p-4 rounded-xl border border-[rgba(255,255,255,0.08)] bg-white/[0.015] flex flex-wrap items-center justify-between gap-4">
+                            <div class="flex items-center gap-3.5">
+                                <div class="w-10 h-10 rounded-xl bg-[#e8c987]/10 text-[#e8c987] flex items-center justify-center font-bold text-sm">
+                                    <i class="fa-solid fa-gem"></i>
+                                </div>
+                                <div>
+                                    <div class="text-sm font-bold text-white">Sovereign Gold Bond Allocation</div>
+                                    <div class="text-xs text-[#8b95a5]">Folio #STK-9901428 · Monthly SIP on 15th · Next: 15 Nov 2026</div>
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-6 text-right">
+                                <div>
+                                    <div class="text-sm font-bold text-white">₹5,000/mo</div>
+                                    <div class="text-[11px] text-[#e8c987] font-medium">+13.5% IRR</div>
+                                </div>
+                                <span class="badge badge-green">Active</span>
+                                <button onclick="showWebsiteModal('Sovereign Gold Bond Allocation: 2.5% fixed annual coupon + gold appreciation.')" class="btn-ghost text-xs">
+                                    Details
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TAB 3: GOAL PLANS (tab-wishlist) -->
+            <div id="tab-wishlist" class="tab-panel">
+                <div class="panel-card p-5 mb-6">
+                    <div class="flex flex-wrap justify-between items-center gap-4 pb-4 border-b border-[rgba(255,255,255,0.08)]">
+                        <div>
+                            <h2 class="text-lg font-bold text-white">Life-Goal Wealth Plans</h2>
+                            <p class="text-xs text-[#8b95a5]">Track progress toward concrete financial life milestones.</p>
+                        </div>
+                        <button onclick="showWebsiteModal({title:'Add Life Goal', subtitle:'Stackly Goal Planner', message:'To configure a new life goal plan (e.g., Vacation Home, Startup Corpus), your Salem advisor will compute inflation-adjusted target values.'})" class="btn-primary text-xs">
+                            <i class="fa-solid fa-plus text-xs"></i> New Goal
+                        </button>
+                    </div>
+
+                    <div class="divide-y divide-[rgba(255,255,255,0.08)]">
+                        <!-- Goal 1 -->
+                        <div class="wish-item py-4">
+                            <div class="w-12 h-12 rounded-xl bg-[#c8f169]/10 text-[#c8f169] flex items-center justify-center text-lg shrink-0">
+                                <i class="fa-solid fa-umbrella-beach"></i>
+                            </div>
+                            <div class="flex-1 wish-item-info">
+                                <div class="text-sm font-bold text-white">Retirement Freedom Corpus</div>
+                                <div class="text-xs text-[#8b95a5] mt-0.5">Target: ₹2.40 Cr by 2040 · Currently: ₹1.87 Cr (78%)</div>
+                                <div class="w-full max-w-md progress-track mt-2"><div class="progress-fill" style="width: 78%"></div></div>
+                            </div>
+                            <div class="wish-item-actions flex items-center gap-3">
+                                <button onclick="showWebsiteModal('Retirement Goal Strategy: Currently funded via 60% Equity / 30% Debt / 10% Gold. On track to reach target 14 months ahead of schedule.')" class="btn-ghost text-xs">
+                                    Review Plan
+                                </button>
+                                <button onclick="switchTab('orders')" class="btn-primary text-xs">
+                                    Manage SIP
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Goal 2 -->
+                        <div class="wish-item py-4">
+                            <div class="w-12 h-12 rounded-xl bg-[#5ee6b8]/10 text-[#5ee6b8] flex items-center justify-center text-lg shrink-0">
+                                <i class="fa-solid fa-graduation-cap"></i>
+                            </div>
+                            <div class="flex-1 wish-item-info">
+                                <div class="text-sm font-bold text-white">Child Higher Education Abroad</div>
+                                <div class="text-xs text-[#8b95a5] mt-0.5">Target: ₹75.0 L by 2032 · Currently: ₹40.5 L (54%)</div>
+                                <div class="w-full max-w-md progress-track mt-2"><div class="progress-fill" style="width: 54%; background: #5ee6b8;"></div></div>
+                            </div>
+                            <div class="wish-item-actions flex items-center gap-3">
+                                <button onclick="showWebsiteModal('Child Education Goal: Projected college admission year 2032. Portfolio structured for high compounding before debt transition in 2030.')" class="btn-ghost text-xs">
+                                    Review Plan
+                                </button>
+                                <button onclick="switchTab('orders')" class="btn-primary text-xs">
+                                    Manage SIP
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Goal 3 -->
+                        <div class="wish-item py-4">
+                            <div class="w-12 h-12 rounded-xl bg-[#e8c987]/10 text-[#e8c987] flex items-center justify-center text-lg shrink-0">
+                                <i class="fa-solid fa-house"></i>
+                            </div>
+                            <div class="flex-1 wish-item-info">
+                                <div class="text-sm font-bold text-white">Salem Villa &amp; Property Down Payment</div>
+                                <div class="text-xs text-[#8b95a5] mt-0.5">Target: ₹50.0 L by 2028 · Currently: ₹18.0 L (36%)</div>
+                                <div class="w-full max-w-md progress-track mt-2"><div class="progress-fill" style="width: 36%; background: #e8c987;"></div></div>
+                            </div>
+                            <div class="wish-item-actions flex items-center gap-3">
+                                <button onclick="showWebsiteModal('Property Goal: Low volatility allocation protecting down-payment timeline. Recommended SIP step-up: ₹5,000/mo.')" class="btn-ghost text-xs">
+                                    Review Plan
+                                </button>
+                                <button onclick="switchTab('orders')" class="btn-primary text-xs">
+                                    Manage SIP
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TAB 4: WEALTH STRATEGIES CATALOG (tab-catalog) -->
+            <div id="tab-catalog" class="tab-panel">
+                <div class="panel-card p-5 mb-6">
+                    <div class="flex flex-wrap justify-between items-center gap-4 pb-4 border-b border-[rgba(255,255,255,0.08)]">
+                        <div>
+                            <h2 class="text-lg font-bold text-white">Curated Wealth Strategies</h2>
+                            <p class="text-xs text-[#8b95a5]">Disciplined, research-backed investment baskets tailored for Salem families.</p>
+                        </div>
+                        <div class="w-full sm:w-64 relative">
+                            <i class="fa-solid fa-search absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 text-xs"></i>
+                            <input type="text" id="catalog-search" oninput="filterCatalog()" placeholder="Search strategies, asset class..." class="form-input pl-8 py-2 text-xs">
+                        </div>
+                    </div>
+
+                    <!-- Category filter buttons -->
+                    <div class="flex gap-2 my-4 overflow-x-auto pb-2">
+                        <button class="tab-btn active text-xs" onclick="setCatalogCat('all', this)">All Strategies</button>
+                        <button class="tab-btn text-xs" onclick="setCatalogCat('equity', this)">Equity Growth</button>
+                        <button class="tab-btn text-xs" onclick="setCatalogCat('retirement', this)">Retirement</button>
+                        <button class="tab-btn text-xs" onclick="setCatalogCat('tax', this)">Tax Optimization</button>
+                        <button class="tab-btn text-xs" onclick="setCatalogCat('debt', this)">Debt &amp; Bonds</button>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4" id="catalog-grid">
+                        <!-- Strategy Card 1 -->
+                        <div class="product-card cat-item equity p-5 flex flex-col justify-between">
+                            <div>
+                                <div class="flex justify-between items-start mb-3">
+                                    <span class="badge badge-blue">Equity Large Cap</span>
+                                    <span class="text-xs font-bold text-[#c8f169]">15.4% 3Y CAGR</span>
+                                </div>
+                                <h3 class="text-base font-bold text-white mb-1.5">Stackly Top 50 Index Basket</h3>
+                                <p class="text-xs text-[#8b95a5] leading-relaxed mb-4">
+                                    Low-cost, high-liquidity basket tracking India's top leaders with automated quarterly rebalancing.
+                                </p>
+                            </div>
+                            <div class="pt-3 border-t border-[rgba(255,255,255,0.08)] flex items-center justify-between">
+                                <div>
+                                    <span class="text-[10px] text-[#8b95a5] block">Min SIP</span>
+                                    <span class="text-xs font-bold text-white">₹5,000 / mo</span>
+                                </div>
+                                <button onclick="quickOrder('Stackly Top 50 Index Basket', '₹5,000/mo')" class="btn-primary text-xs py-1.5 px-3.5">
+                                    Invest Now
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Strategy Card 2 -->
+                        <div class="product-card cat-item retirement p-5 flex flex-col justify-between">
+                            <div>
+                                <div class="flex justify-between items-start mb-3">
+                                    <span class="badge badge-green">Retirement Milestone</span>
+                                    <span class="text-xs font-bold text-[#c8f169]">14.8% 5Y CAGR</span>
+                                </div>
+                                <h3 class="text-base font-bold text-white mb-1.5">Salem Freedom 2045 Fund</h3>
+                                <p class="text-xs text-[#8b95a5] leading-relaxed mb-4">
+                                    Target-date retirement architecture shifting from aggressive growth to conservative income as retirement nears.
+                                </p>
+                            </div>
+                            <div class="pt-3 border-t border-[rgba(255,255,255,0.08)] flex items-center justify-between">
+                                <div>
+                                    <span class="text-[10px] text-[#8b95a5] block">Min SIP</span>
+                                    <span class="text-xs font-bold text-white">₹10,000 / mo</span>
+                                </div>
+                                <button onclick="quickOrder('Salem Freedom 2045 Fund', '₹10,000/mo')" class="btn-primary text-xs py-1.5 px-3.5">
+                                    Invest Now
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Strategy Card 3 -->
+                        <div class="product-card cat-item tax p-5 flex flex-col justify-between">
+                            <div>
+                                <div class="flex justify-between items-start mb-3">
+                                    <span class="badge badge-yellow">Section 80C ELSS</span>
+                                    <span class="text-xs font-bold text-[#c8f169]">16.9% 3Y CAGR</span>
+                                </div>
+                                <h3 class="text-base font-bold text-white mb-1.5">Tax Saver Advantage Portfolio</h3>
+                                <p class="text-xs text-[#8b95a5] leading-relaxed mb-4">
+                                    Save up to ₹46,800 in annual taxes under 80C while building long-term equity compounding.
+                                </p>
+                            </div>
+                            <div class="pt-3 border-t border-[rgba(255,255,255,0.08)] flex items-center justify-between">
+                                <div>
+                                    <span class="text-[10px] text-[#8b95a5] block">Min SIP</span>
+                                    <span class="text-xs font-bold text-white">₹2,500 / mo</span>
+                                </div>
+                                <button onclick="quickOrder('Tax Saver Advantage Portfolio', '₹2,500/mo')" class="btn-primary text-xs py-1.5 px-3.5">
+                                    Invest Now
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Strategy Card 4 -->
+                        <div class="product-card cat-item debt p-5 flex flex-col justify-between">
+                            <div>
+                                <div class="flex justify-between items-start mb-3">
+                                    <span class="badge badge-gray">Capital Preservation</span>
+                                    <span class="text-xs font-bold text-[#eef1f5]">8.2% Yield</span>
+                                </div>
+                                <h3 class="text-base font-bold text-white mb-1.5">Sovereign &amp; AAA Bond Ladder</h3>
+                                <p class="text-xs text-[#8b95a5] leading-relaxed mb-4">
+                                    Rock-solid safety for emergency funds and short-term capital commitments without market fluctuations.
+                                </p>
+                            </div>
+                            <div class="pt-3 border-t border-[rgba(255,255,255,0.08)] flex items-center justify-between">
+                                <div>
+                                    <span class="text-[10px] text-[#8b95a5] block">Min Lumpsum</span>
+                                    <span class="text-xs font-bold text-white">₹50,000</span>
+                                </div>
+                                <button onclick="quickOrder('Sovereign & AAA Bond Ladder', '₹50,000')" class="btn-primary text-xs py-1.5 px-3.5">
+                                    Invest Now
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Strategy Card 5 -->
+                        <div class="product-card cat-item equity p-5 flex flex-col justify-between">
+                            <div>
+                                <div class="flex justify-between items-start mb-3">
+                                    <span class="badge badge-blue">Mid &amp; Small Cap</span>
+                                    <span class="text-xs font-bold text-[#c8f169]">19.6% 3Y CAGR</span>
+                                </div>
+                                <h3 class="text-base font-bold text-white mb-1.5">India Emerging Leaders Basket</h3>
+                                <p class="text-xs text-[#8b95a5] leading-relaxed mb-4">
+                                    High-growth potential for aggressive long-term investors aiming for wealth multiplier horizons.
+                                </p>
+                            </div>
+                            <div class="pt-3 border-t border-[rgba(255,255,255,0.08)] flex items-center justify-between">
+                                <div>
+                                    <span class="text-[10px] text-[#8b95a5] block">Min SIP</span>
+                                    <span class="text-xs font-bold text-white">₹5,000 / mo</span>
+                                </div>
+                                <button onclick="quickOrder('India Emerging Leaders Basket', '₹5,000/mo')" class="btn-primary text-xs py-1.5 px-3.5">
+                                    Invest Now
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TAB 5: INSIGHTS & GUIDES (tab-blog) -->
+            <div id="tab-blog" class="tab-panel">
+                <div class="panel-card p-5 mb-6">
+                    <div class="pb-4 border-b border-[rgba(255,255,255,0.08)] mb-6">
+                        <h2 class="text-lg font-bold text-white">Salem Wealth Insights &amp; Market Guides</h2>
+                        <p class="text-xs text-[#8b95a5]">Practical, research-backed financial education to sharpen your investment decisions.</p>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+                        <article class="p-5 rounded-xl border border-[rgba(255,255,255,0.08)] bg-white/[0.015] flex flex-col justify-between">
+                            <div>
+                                <div class="text-[10px] text-[#c8f169] uppercase tracking-wider font-semibold mb-2">Portfolio Strategy</div>
+                                <h3 class="text-base font-bold text-white mb-2">The Power of Rupee Cost Averaging in Volatile Markets</h3>
+                                <p class="text-xs text-[#8b95a5] leading-relaxed">
+                                    Why disciplined monthly SIPs routinely beat market timing strategies over 7-to-10 year horizons.
+                                </p>
+                            </div>
+                            <a href="blog post.html" class="mt-4 text-xs font-semibold text-[#c8f169] hover:underline inline-flex items-center gap-1">
+                                Read Guide <i class="fa-solid fa-arrow-right text-[10px]"></i>
+                            </a>
+                        </article>
+
+                        <article class="p-5 rounded-xl border border-[rgba(255,255,255,0.08)] bg-white/[0.015] flex flex-col justify-between">
+                            <div>
+                                <div class="text-[10px] text-[#5ee6b8] uppercase tracking-wider font-semibold mb-2">Tax Planning</div>
+                                <h3 class="text-base font-bold text-white mb-2">Tax Optimisation Guide for Salem Business Families</h3>
+                                <p class="text-xs text-[#8b95a5] leading-relaxed">
+                                    How to structure corporate surplus, dividends, and personal wealth without falling foul of regulatory scrutiny.
+                                </p>
+                            </div>
+                            <a href="blog post.html" class="mt-4 text-xs font-semibold text-[#c8f169] hover:underline inline-flex items-center gap-1">
+                                Read Guide <i class="fa-solid fa-arrow-right text-[10px]"></i>
+                            </a>
+                        </article>
+
+                        <article class="p-5 rounded-xl border border-[rgba(255,255,255,0.08)] bg-white/[0.015] flex flex-col justify-between">
+                            <div>
+                                <div class="text-[10px] text-[#e8c987] uppercase tracking-wider font-semibold mb-2">Retirement</div>
+                                <h3 class="text-base font-bold text-white mb-2">Inflation-Proofing Your Post-Retirement Monthly Income</h3>
+                                <p class="text-xs text-[#8b95a5] leading-relaxed">
+                                    Transitioning from accumulation to systematic withdrawal without depleting your capital base.
+                                </p>
+                            </div>
+                            <a href="blog post.html" class="mt-4 text-xs font-semibold text-[#c8f169] hover:underline inline-flex items-center gap-1">
+                                Read Guide <i class="fa-solid fa-arrow-right text-[10px]"></i>
+                            </a>
+                        </article>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TAB 6: ADVISORY SUPPORT DESK (tab-support) -->
+            <div id="tab-support" class="tab-panel">
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                    <div class="panel-card p-5 lg:col-span-2">
+                        <div class="pb-3 border-b border-[rgba(255,255,255,0.08)] mb-5">
+                            <h2 class="text-lg font-bold text-white">Raise an Advisory Ticket</h2>
+                            <p class="text-xs text-[#8b95a5]">Send a direct request to your dedicated Salem wealth advisory team.</p>
+                        </div>
+
+                        <!-- Success Alert -->
+                        <div id="sup-success" class="hidden mb-4 p-3.5 rounded-xl bg-[#c8f169]/10 border border-[#c8f169]/30 text-[#c8f169] text-xs flex items-center gap-2">
+                            <i class="fa-solid fa-circle-check"></i>
+                            <span>Advisory ticket submitted successfully! Your advisor will respond within 24 hours.</span>
+                        </div>
+
+                        <form id="support-ticket-form" onsubmit="handleSupportSubmit(event)" novalidate class="space-y-4">
+                            <div>
+                                <label for="sup-cat" class="form-label">Advisory Category</label>
+                                <select id="sup-cat" class="form-input text-xs bg-[#07090d]">
+                                    <option value="">Select a Category</option>
+                                    <option value="portfolio">Portfolio Review &amp; Rebalancing</option>
+                                    <option value="sip">SIP Mandate Modification / Step-up</option>
+                                    <option value="tax">Tax Statements &amp; Capital Gains Report</option>
+                                    <option value="kyc">KYC / Bank Account Update</option>
+                                    <option value="meeting">Schedule In-Person Meeting (Salem)</option>
+                                </select>
+                                <div class="error-msg" id="sup-cat-err">Please select a query category.</div>
+                            </div>
+
+                            <div>
+                                <label for="sup-subject" class="form-label">Subject</label>
+                                <input type="text" id="sup-subject" class="form-input" placeholder="e.g. Annual portfolio rebalancing request">
+                                <div class="error-msg" id="sup-subject-err">Subject must be at least 5 characters.</div>
+                            </div>
+
+                            <div>
+                                <label for="sup-msg" class="form-label">Query Description</label>
+                                <textarea id="sup-msg" rows="4" class="form-input" placeholder="Please describe what you would like to review with your advisor..."></textarea>
+                                <div class="error-msg" id="sup-msg-err">Please provide a detailed query (min 15 characters).</div>
+                            </div>
+
+                            <button type="submit" class="btn-primary text-xs">
+                                <i class="fa-solid fa-paper-plane text-xs"></i> Submit Query
+                            </button>
+                        </form>
+                    </div>
+
+                    <!-- Advisor Contact Info -->
+                    <div class="panel-card p-5">
+                        <div class="pb-3 border-b border-[rgba(255,255,255,0.08)] mb-4">
+                            <h3 class="text-sm font-bold text-white">Your Dedicated Advisor</h3>
+                        </div>
+                        <div class="flex items-center gap-3 mb-4">
+                            <div class="avatar text-sm font-bold bg-[#c8f169] text-[#07090d]">RS</div>
+                            <div>
+                                <div class="text-sm font-bold text-white">R. Srinivasan, CFP</div>
+                                <div class="text-[11px] text-[#8b95a5]">Senior Wealth Planner</div>
+                            </div>
+                        </div>
+
+                        <div class="space-y-3 text-xs text-[#8b95a5] border-t border-[rgba(255,255,255,0.08)] pt-4">
+                            <div class="flex items-center gap-2.5">
+                                <i class="fa-solid fa-building text-white/50 w-4"></i>
+                                <span>Stackly Salem Central Office</span>
+                            </div>
+                            <div class="flex items-center gap-2.5">
+                                <i class="fa-solid fa-phone text-white/50 w-4"></i>
+                                <span>+91 00000 00000</span>
+                            </div>
+                            <div class="flex items-center gap-2.5">
+                                <i class="fa-solid fa-envelope text-white/50 w-4"></i>
+                                <span>advisory@stackly.in</span>
+                            </div>
+                            <div class="flex items-center gap-2.5">
+                                <i class="fa-solid fa-clock text-white/50 w-4"></i>
+                                <span>Mon – Sat, 10:00 – 18:00</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TAB 7: PROFILE & SECURITY (tab-profile) -->
+            <div id="tab-profile" class="tab-panel">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    <!-- Profile Details Form -->
+                    <div class="panel-card p-5">
+                        <div class="pb-3 border-b border-[rgba(255,255,255,0.08)] mb-5">
+                            <h2 class="text-base font-bold text-white">Client Personal Information</h2>
+                            <p class="text-xs text-[#8b95a5]">Update your primary contact and client portfolio records.</p>
+                        </div>
+
+                        <div id="profile-success" class="hidden mb-4 p-3 rounded-xl bg-[#c8f169]/10 border border-[#c8f169]/30 text-[#c8f169] text-xs flex items-center gap-2">
+                            <i class="fa-solid fa-circle-check"></i>
+                            <span>Profile records updated successfully!</span>
+                        </div>
+
+                        <form id="profile-form" onsubmit="saveProfile(event)" novalidate class="space-y-4">
+                            <div class="grid grid-cols-2 gap-4">
+                                <div>
+                                    <label for="p-fname" class="form-label">First Name</label>
+                                    <input type="text" id="p-fname" class="form-input" placeholder="Ramesh">
+                                    <div class="error-msg" id="p-fname-err">First name is required.</div>
+                                </div>
+                                <div>
+                                    <label for="p-lname" class="form-label">Last Name</label>
+                                    <input type="text" id="p-lname" class="form-input" placeholder="Kumar">
+                                    <div class="error-msg" id="p-lname-err">Last name is required.</div>
+                                </div>
+                            </div>
+
+                            <div>
+                                <label for="p-email" class="form-label">Registered Email</label>
+                                <input type="email" id="p-email" class="form-input" placeholder="client@example.com">
+                                <div class="error-msg" id="p-email-err">Enter a valid email address.</div>
+                            </div>
+
+                            <div>
+                                <label for="p-phone" class="form-label">Registered Phone Number</label>
+                                <input type="tel" id="p-phone" class="form-input" placeholder="9876543210">
+                                <div class="error-msg" id="p-phone-err">Enter a valid phone number.</div>
+                            </div>
+
+                            <button type="submit" class="btn-primary text-xs">
+                                <i class="fa-solid fa-check text-xs"></i> Save Profile Details
+                            </button>
+                        </form>
+                    </div>
+
+                    <!-- Password Security Form -->
+                    <div class="panel-card p-5">
+                        <div class="pb-3 border-b border-[rgba(255,255,255,0.08)] mb-5">
+                            <h2 class="text-base font-bold text-white">Security &amp; Password</h2>
+                            <p class="text-xs text-[#8b95a5]">Change your portal password to maintain strict account security.</p>
+                        </div>
+
+                        <div id="pw-success" class="hidden mb-4 p-3 rounded-xl bg-[#c8f169]/10 border border-[#c8f169]/30 text-[#c8f169] text-xs flex items-center gap-2">
+                            <i class="fa-solid fa-circle-check"></i>
+                            <span>Security password updated successfully!</span>
+                        </div>
+
+                        <form id="pw-form" onsubmit="changePassword(event)" novalidate class="space-y-4">
+                            <div>
+                                <label for="curr-pw" class="form-label">Current Password</label>
+                                <input type="password" id="curr-pw" class="form-input" placeholder="••••••••">
+                                <div class="error-msg" id="curr-pw-err">Current password is required.</div>
+                            </div>
+
+                            <div>
+                                <label for="new-pw" class="form-label">New Password (min 8 chars)</label>
+                                <input type="password" id="new-pw" class="form-input" placeholder="••••••••">
+                                <div class="error-msg" id="new-pw-err">New password must be at least 8 characters.</div>
+                            </div>
+
+                            <div>
+                                <label for="conf-pw" class="form-label">Confirm New Password</label>
+                                <input type="password" id="conf-pw" class="form-input" placeholder="••••••••">
+                                <div class="error-msg" id="conf-pw-err">Passwords do not match.</div>
+                            </div>
+
+                            <button type="submit" class="btn-primary text-xs">
+                                <i class="fa-solid fa-key text-xs"></i> Update Password
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Website Popup Modal (Replaces native browser alert/confirm) -->
+    <div id="website-modal" class="fixed inset-0 z-[9999] hidden flex items-center justify-center bg-black/85 backdrop-blur-sm p-4 animate-fade-in" style="display: none;">
+        <div class="bg-[#0c1016] border border-[rgba(255,255,255,0.15)] rounded-2xl max-w-md w-full p-6 shadow-2xl relative text-left transform transition-all scale-100">
+            <button onclick="closeWebsiteModal()" class="absolute top-4 right-4 text-gray-400 hover:text-white transition-colors text-lg" aria-label="Close modal">&times;</button>
+            <div class="flex items-start gap-3.5 mb-3">
+                <div id="modal-icon-container" class="w-10 h-10 rounded-xl bg-[#c8f169]/10 text-[#c8f169] border border-[#c8f169]/25 flex items-center justify-center shrink-0">
+                    <i id="modal-icon" class="fa-solid fa-circle-info text-base"></i>
+                </div>
+                <div>
+                    <h3 id="modal-title" class="text-base font-bold text-white leading-tight">Notification</h3>
+                    <p id="modal-subtitle" class="text-xs text-[#8b95a5] mt-0.5">Stackly Wealth Client Hub</p>
+                </div>
+            </div>
+            <div id="modal-body" class="text-xs sm:text-sm text-[#eef1f5] leading-relaxed my-3 max-h-[60vh] overflow-y-auto whitespace-pre-line"></div>
+            <div id="modal-actions" class="flex items-center justify-end gap-2.5 mt-5 pt-3 border-t border-[rgba(255,255,255,0.08)]">
+                <button id="modal-cancel-btn" onclick="closeWebsiteModal()" class="btn-ghost text-xs hidden">Cancel</button>
+                <button id="modal-confirm-btn" class="btn-primary text-xs">Acknowledge</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Sidebar Toggle
+        function toggleSidebar() {
+            document.getElementById('sidebar').classList.toggle('open');
+            document.getElementById('mobile-overlay').classList.toggle('show');
+        }
+        function closeSidebar() {
+            document.getElementById('sidebar').classList.remove('open');
+            document.getElementById('mobile-overlay').classList.remove('show');
+        }
+
+        // Tab Navigation
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+            document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+
+            const panel = document.getElementById('tab-' + tabId);
+            if (panel) panel.classList.add('active');
+
+            const navItem = document.getElementById('nav-' + tabId);
+            if (navItem) navItem.classList.add('active');
+
+            const titles = {
+                'overview': 'Portfolio Overview · Salem Central',
+                'orders': 'My Portfolios & Active SIP Mandates',
+                'wishlist': 'Life-Goal Wealth Plans',
+                'catalog': 'Curated Wealth Strategies',
+                'blog': 'Salem Market Insights & Guides',
+                'support': 'Advisory Desk & Support Queries',
+                'profile': 'Profile & Account Security'
+            };
+            const titleEl = document.getElementById('topbar-title');
+            if (titleEl && titles[tabId]) titleEl.innerHTML = `<span>${titles[tabId]}</span>`;
+
+            closeSidebar();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // In-dashboard Strategy Catalog Filter
+        function setCatalogCat(cat, btn) {
+            document.querySelectorAll('#tab-catalog .tab-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            const items = document.querySelectorAll('.cat-item');
+            items.forEach(el => {
+                if (cat === 'all' || el.classList.contains(cat)) {
+                    el.style.display = '';
+                } else {
+                    el.style.display = 'none';
+                }
+            });
+        }
+
+        function filterCatalog() {
+            const q = document.getElementById('catalog-search').value.toLowerCase();
+            document.querySelectorAll('.cat-item').forEach(el => {
+                const title = el.querySelector('h3').textContent.toLowerCase();
+                const desc = el.querySelector('p').textContent.toLowerCase();
+                if (title.includes(q) || desc.includes(q)) {
+                    el.style.display = '';
+                } else {
+                    el.style.display = 'none';
+                }
+            });
+        }
+
+        function quickOrder(product, price) {
+            showWebsiteModal({
+                title: 'Investment Allocation Request',
+                subtitle: 'Stackly Salem Wealth',
+                message: `You have initiated an allocation for "${product}" with a scheduled investment of ${price}. Your dedicated Salem wealth advisor will prepare the mutual fund mandate documents.`,
+                type: 'success',
+                confirmText: 'Proceed to Review'
+            });
+        }
+
+        // Load user info
+        document.addEventListener('DOMContentLoaded', () => {
+            const email = localStorage.getItem('stackly_user_email') || localStorage.getItem('userEmail') || localStorage.getItem('email');
+            let name = localStorage.getItem('stackly_user_name') || localStorage.getItem('name');
+            let phone = localStorage.getItem('stackly_user_phone');
+
+            if ((!name || name === 'John Doe') && email) {
+                try {
+                    const users = JSON.parse(localStorage.getItem('stackly_registered_users') || '{}');
+                    const registered = users[email.toLowerCase()];
+                    if (registered && registered.name) {
+                        name = registered.name;
+                        if (!phone && registered.phone) phone = registered.phone;
+                        localStorage.setItem('stackly_user_name', name);
+                    }
+                } catch (err) {}
+            }
+
+            if ((!name || name === 'John Doe') && email) {
+                const local = email.split('@')[0].replace(/[._-]/g, ' ');
+                name = local.split(' ').filter(Boolean).map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
+                localStorage.setItem('stackly_user_name', name);
+            }
+
+            if (!name) {
+                name = 'Client';
+            }
+
+            if (email) {
+                document.getElementById('sidebar-email').textContent = email;
+                if (document.getElementById('p-email')) document.getElementById('p-email').value = email;
+            }
+
+            document.getElementById('sidebar-name').textContent = name;
+            const parts = name.split(' ').filter(Boolean);
+            const first = parts[0] || 'Client';
+            const last = parts.slice(1).join(' ');
+            document.getElementById('welcome-name').textContent = first;
+
+            const initials = ((parts[0] ? parts[0][0] : '') + (parts[1] ? parts[1][0] : (parts[0] && parts[0].length > 1 ? parts[0][1] : ''))).toUpperCase() || 'ST';
+            document.getElementById('user-avatar-sidebar').textContent = initials;
+            document.getElementById('user-avatar-top').textContent = initials;
+
+            if (document.getElementById('p-fname')) document.getElementById('p-fname').value = first;
+            if (document.getElementById('p-lname')) document.getElementById('p-lname').value = last;
+            if (phone && document.getElementById('p-phone')) document.getElementById('p-phone').value = phone;
+        });
+
+        // Profile form validation
+        function saveProfile(e) {
+            e.preventDefault();
+            let valid = true;
+            const fname = document.getElementById('p-fname').value.trim();
+            const lname = document.getElementById('p-lname').value.trim();
+            const email = document.getElementById('p-email').value.trim();
+            const phone = document.getElementById('p-phone').value.trim();
+
+            const toggleErr = (id, show) => document.getElementById(id).classList.toggle('show', show);
+
+            if (!fname || fname.length < 2) { toggleErr('p-fname-err', true); document.getElementById('p-fname').classList.add('input-error'); valid = false; }
+            else { toggleErr('p-fname-err', false); document.getElementById('p-fname').classList.remove('input-error'); document.getElementById('p-fname').classList.add('input-success'); }
+            
+            if (!lname || lname.length < 2) { toggleErr('p-lname-err', true); document.getElementById('p-lname').classList.add('input-error'); valid = false; }
+            else { toggleErr('p-lname-err', false); document.getElementById('p-lname').classList.remove('input-error'); document.getElementById('p-lname').classList.add('input-success'); }
+            
+            if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { toggleErr('p-email-err', true); document.getElementById('p-email').classList.add('input-error'); valid = false; }
+            else { toggleErr('p-email-err', false); document.getElementById('p-email').classList.remove('input-error'); document.getElementById('p-email').classList.add('input-success'); }
+            
+            if (!phone || !/^[0-9+\-\s]{7,15}$/.test(phone)) { toggleErr('p-phone-err', true); document.getElementById('p-phone').classList.add('input-error'); valid = false; }
+            else { toggleErr('p-phone-err', false); document.getElementById('p-phone').classList.remove('input-error'); document.getElementById('p-phone').classList.add('input-success'); }
+
+            if (!valid) return;
+
+            const fullName = fname + ' ' + lname;
+            localStorage.setItem('stackly_user_name', fullName);
+            localStorage.setItem('stackly_user_email', email);
+            localStorage.setItem('stackly_user_phone', phone);
+            localStorage.setItem('userEmail', email);
+            localStorage.setItem('email', email);
+            localStorage.setItem('name', fullName);
+
+            try {
+                const users = JSON.parse(localStorage.getItem('stackly_registered_users') || '{}');
+                users[email.toLowerCase()] = {
+                    name: fullName,
+                    fname: fname,
+                    lname: lname,
+                    email: email,
+                    phone: phone,
+                    role: localStorage.getItem('stackly_user_role') || 'user'
+                };
+                localStorage.setItem('stackly_registered_users', JSON.stringify(users));
+            } catch (err) {}
+
+            document.getElementById('sidebar-name').textContent = fullName;
+            document.getElementById('sidebar-email').textContent = email;
+            document.getElementById('welcome-name').textContent = fname;
+
+            const initials = ((fname ? fname[0] : '') + (lname ? lname[0] : '')).toUpperCase() || 'ST';
+            document.getElementById('user-avatar-sidebar').textContent = initials;
+            document.getElementById('user-avatar-top').textContent = initials;
+
+            const succ = document.getElementById('profile-success');
+            succ.classList.remove('hidden');
+            setTimeout(() => succ.classList.add('hidden'), 4000);
+        }
+
+        // Change password validation
+        function changePassword(e) {
+            e.preventDefault();
+            let valid = true;
+            const curr = document.getElementById('curr-pw').value;
+            const newPw = document.getElementById('new-pw').value;
+            const conf = document.getElementById('conf-pw').value;
+
+            const toggleErr = (id, show) => document.getElementById(id).classList.toggle('show', show);
+
+            if (!curr) { toggleErr('curr-pw-err', true); document.getElementById('curr-pw').classList.add('input-error'); valid = false; }
+            else { toggleErr('curr-pw-err', false); document.getElementById('curr-pw').classList.remove('input-error'); }
+            
+            if (!newPw || newPw.length < 8) { toggleErr('new-pw-err', true); document.getElementById('new-pw').classList.add('input-error'); valid = false; }
+            else { toggleErr('new-pw-err', false); document.getElementById('new-pw').classList.remove('input-error'); }
+            
+            if (!conf || conf !== newPw) { toggleErr('conf-pw-err', true); document.getElementById('conf-pw').classList.add('input-error'); valid = false; }
+            else { toggleErr('conf-pw-err', false); document.getElementById('conf-pw').classList.remove('input-error'); }
+
+            if (!valid) return;
+
+            const succ = document.getElementById('pw-success');
+            succ.classList.remove('hidden');
+            e.target.reset();
+            setTimeout(() => succ.classList.add('hidden'), 4000);
+        }
+
+        // Support ticket submission validation
+        function handleSupportSubmit(e) {
+            e.preventDefault();
+            let valid = true;
+            const cat = document.getElementById('sup-cat').value;
+            const subject = document.getElementById('sup-subject').value.trim();
+            const msg = document.getElementById('sup-msg').value.trim();
+
+            const toggleErr = (id, show) => document.getElementById(id).classList.toggle('show', show);
+
+            if (!cat) { toggleErr('sup-cat-err', true); document.getElementById('sup-cat').classList.add('input-error'); valid = false; }
+            else { toggleErr('sup-cat-err', false); document.getElementById('sup-cat').classList.remove('input-error'); }
+
+            if (!subject || subject.length < 5) { toggleErr('sup-subject-err', true); document.getElementById('sup-subject').classList.add('input-error'); valid = false; }
+            else { toggleErr('sup-subject-err', false); document.getElementById('sup-subject').classList.remove('input-error'); }
+
+            if (!msg || msg.length < 15) { toggleErr('sup-msg-err', true); document.getElementById('sup-msg').classList.add('input-error'); valid = false; }
+            else { toggleErr('sup-msg-err', false); document.getElementById('sup-msg').classList.remove('input-error'); }
+
+            if (!valid) return;
+
+            const succ = document.getElementById('sup-success');
+            succ.classList.remove('hidden');
+            e.target.reset();
+            setTimeout(() => succ.classList.add('hidden'), 5000);
+        }
+
+        // Modern Website Modal & Notification System
+        let modalConfirmCallback = null;
+
+        function showWebsiteModal(options) {
+            const modal = document.getElementById('website-modal');
+            const titleEl = document.getElementById('modal-title');
+            const subEl = document.getElementById('modal-subtitle');
+            const bodyEl = document.getElementById('modal-body');
+            const iconEl = document.getElementById('modal-icon');
+            const iconContainer = document.getElementById('modal-icon-container');
+            const cancelBtn = document.getElementById('modal-cancel-btn');
+            const confirmBtn = document.getElementById('modal-confirm-btn');
+
+            const title = typeof options === 'string' ? 'Advisory Notification' : (options.title || 'Notification');
+            const message = typeof options === 'string' ? options : (options.message || '');
+            const type = options.type || 'info';
+            const isConfirm = !!options.onConfirm;
+
+            titleEl.textContent = title;
+            subEl.textContent = options.subtitle || 'Stackly Salem Wealth Hub';
+            bodyEl.textContent = message;
+
+            iconContainer.className = 'w-10 h-10 rounded-xl flex items-center justify-center shrink-0 border ';
+            if (type === 'danger') {
+                iconContainer.className += 'bg-red-500/10 text-red-400 border-red-500/20';
+                iconEl.className = 'fa-solid fa-trash text-base';
+            } else if (type === 'warning') {
+                iconContainer.className += 'bg-amber-500/10 text-amber-400 border-amber-500/20';
+                iconEl.className = 'fa-solid fa-right-from-bracket text-base';
+            } else if (type === 'success') {
+                iconContainer.className += 'bg-[#c8f169]/10 text-[#c8f169] border-[#c8f169]/25';
+                iconEl.className = 'fa-solid fa-circle-check text-base';
+            } else {
+                iconContainer.className += 'bg-[#5ee6b8]/10 text-[#5ee6b8] border-[#5ee6b8]/25';
+                iconEl.className = 'fa-solid fa-circle-info text-base';
+            }
+
+            confirmBtn.textContent = options.confirmText || 'Acknowledge';
+            modalConfirmCallback = options.onConfirm || null;
+
+            if (isConfirm) {
+                cancelBtn.classList.remove('hidden');
+                cancelBtn.style.display = 'inline-flex';
+                cancelBtn.textContent = options.cancelText || 'Cancel';
+            } else {
+                cancelBtn.classList.add('hidden');
+                cancelBtn.style.display = 'none';
+            }
+
+            confirmBtn.onclick = function(e) {
+                if (e) { e.preventDefault(); e.stopPropagation(); }
+                const callback = modalConfirmCallback;
+                closeWebsiteModal();
+                if (callback) callback();
+            };
+
+            modal.classList.remove('hidden');
+            modal.style.display = 'flex';
+        }
+
+        function closeWebsiteModal() {
+            const modal = document.getElementById('website-modal');
+            if (modal) {
+                modal.classList.add('hidden');
+                modal.style.display = 'none';
+            }
+            modalConfirmCallback = null;
+        }
+
+        function confirmSignOut(e) {
+            if (e) { e.preventDefault(); e.stopPropagation(); }
+            showWebsiteModal({
+                title: 'Sign Out Confirmation',
+                subtitle: 'Stackly Client Session',
+                message: 'Are you sure you want to sign out of your client wealth portal?',
+                type: 'warning',
+                confirmText: 'Sign Out',
+                cancelText: 'Stay Logged In',
+                onConfirm: () => {
+                    window.location.href = 'login.html';
+                }
+            });
+        }
+
+        window.alert = function(message) {
+            showWebsiteModal({
+                title: 'Stackly Wealth Notice',
+                message: message,
+                type: 'info'
+            });
+        };
+    </script>
+</body>
+</html>

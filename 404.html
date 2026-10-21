@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>404 — Page Not Found | Stackly Investment & Wealth Planning, Salem</title>
+    <meta name="description" content="Oops! This financial page doesn't exist. Return to Stackly Investment & Wealth Planning and explore our Salem portfolio advisory services.">
+
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="portal.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Sora:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Sora', 'system-ui', 'sans-serif'],
+                        serif: ['Instrument Serif', 'Georgia', 'serif']
+                    },
+                    colors: {
+                        bg: '#07090d',
+                        bg2: '#0c1016',
+                        surface: '#10151d',
+                        line: 'rgba(255, 255, 255, 0.08)',
+                        accent: '#c8f169',
+                        accent2: '#5ee6b8',
+                        gold: '#e8c987',
+                        muted: '#8b95a5'
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        :root {
+            --bg: #07090d;
+            --bg2: #0c1016;
+            --surface: #10151d;
+            --line: rgba(255, 255, 255, 0.08);
+            --text: #eef1f5;
+            --muted: #8b95a5;
+            --accent: #c8f169;
+            --accent2: #5ee6b8;
+            --gold: #e8c987;
+            --serif: 'Instrument Serif', Georgia, serif;
+            --sans: 'Sora', system-ui, sans-serif;
+        }
+
+        * { box-sizing: border-box; }
+        body {
+            font-family: var(--sans);
+            background-color: var(--bg);
+            color: var(--text);
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+            min-height: 100vh;
+        }
+
+        ::-webkit-scrollbar { width: 5px; }
+        ::-webkit-scrollbar-track { background: var(--bg); }
+        ::-webkit-scrollbar-thumb { background: #1a2230; border-radius: 10px; }
+
+        /* Brand logo */
+        .logo-mark { display: inline-grid; gap: 3px; width: 22px; vertical-align: middle; }
+        .logo-mark i { display: block; height: 4.5px; border-radius: 3px; background: var(--accent); }
+        .logo-mark i:nth-child(2) { width: 80%; opacity: .75; }
+        .logo-mark i:nth-child(3) { width: 55%; opacity: .45; }
+
+        /* Ambient Orbs */
+        .orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(90px);
+            opacity: 0.35;
+            pointer-events: none;
+        }
+        .orb-a {
+            width: 480px; height: 480px;
+            background: rgba(94, 230, 184, 0.16);
+            top: -100px; right: -80px;
+            animation: orbFloat 14s ease-in-out infinite alternate;
+        }
+        .orb-b {
+            width: 440px; height: 440px;
+            background: rgba(200, 241, 105, 0.12);
+            bottom: -100px; left: -80px;
+            animation: orbFloat 16s ease-in-out infinite alternate-reverse;
+        }
+        @keyframes orbFloat {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(30px, 40px); }
+        }
+
+
+        /* Giant 404 background */
+        .giant-404 {
+            position: absolute;
+            top: 48%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: clamp(12rem, 36vw, 34rem);
+            font-weight: 800;
+            line-height: 1;
+            -webkit-text-stroke: 1px rgba(200, 241, 105, 0.08);
+            color: transparent;
+            white-space: nowrap;
+            pointer-events: none;
+            user-select: none;
+            animation: floatBg 12s ease-in-out infinite;
+            letter-spacing: -0.05em;
+            font-family: var(--sans);
+        }
+        @keyframes floatBg {
+            0%, 100% { transform: translate(-50%, -50%) translateY(0px); }
+            50% { transform: translate(-50%, -50%) translateY(-15px); }
+        }
+
+        /* Animated stack icon */
+        .stack-icon-wrap {
+            animation: stackPulse 3s ease-in-out infinite;
+        }
+        @keyframes stackPulse {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-8px); }
+        }
+
+        .btn-primary {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 0.85rem 1.8rem;
+            border-radius: 999px;
+            background: var(--accent);
+            color: #07090d;
+            font-weight: 600;
+            font-size: 0.88rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 25px -6px rgba(200, 241, 105, 0.4);
+        }
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            background: #d4f682;
+            box-shadow: 0 14px 30px -6px rgba(200, 241, 105, 0.6);
+        }
+
+        .btn-ghost {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 0.85rem 1.8rem;
+            border-radius: 999px;
+            border: 1px solid var(--line);
+            background: rgba(255, 255, 255, 0.03);
+            color: var(--text);
+            font-weight: 500;
+            font-size: 0.88rem;
+            transition: all 0.3s ease;
+        }
+        .btn-ghost:hover {
+            background: rgba(255, 255, 255, 0.08);
+            transform: translateY(-2px);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .dot {
+            display: inline-block;
+            width: 7px; height: 7px;
+            border-radius: 50%;
+            background: var(--accent);
+            box-shadow: 0 0 10px var(--accent);
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse { 50% { opacity: 0.35; } }
+    </style>
+</head>
+<body class="flex flex-col justify-between relative">
+
+    <div class="orb orb-a"></div>
+    <div class="orb orb-b"></div>
+
+    <!-- Background Giant Watermark -->
+    <div class="giant-404" aria-hidden="true">404</div>
+
+    <!-- Header Navigation -->
+    <header class="w-full relative z-40 px-6 md:px-12 py-5 border-b border-[rgba(255,255,255,0.08)] bg-[#07090d]/80 backdrop-blur-md flex justify-between items-center">
+        <a href="index.html" class="inline-flex items-center gap-3 group">
+            <img src="assets/stackly-logo.webp" alt="Stackly" class="logo-img" />
+        </a>
+
+        <nav class="hidden md:flex items-center gap-6 text-sm text-[#8b95a5]">
+            <a href="index.html" class="hover:text-white transition-colors">Home</a>
+            <a href="services.html" class="hover:text-white transition-colors">Services</a>
+            <a href="about.html" class="hover:text-white transition-colors">About</a>
+            <a href="blog.html" class="hover:text-white transition-colors">Blog</a>
+            <a href="contact.html" class="hover:text-white transition-colors">Contact</a>
+        </nav>
+
+        <div class="flex items-center gap-3">
+            <a href="login.html" class="text-xs font-semibold px-4 py-2 rounded-full border border-white/20 text-white hover:bg-white hover:text-[#07090d] transition-all">
+                Sign In
+            </a>
+            <a href="contact.html" class="hidden sm:inline-flex text-xs font-semibold px-4 py-2 rounded-full bg-[#c8f169] text-[#07090d] hover:bg-[#d4f682] transition-all">
+                Contact Us
+            </a>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="flex-1 flex items-center justify-center px-6 py-16 relative z-30">
+        <div class="max-w-2xl text-center">
+
+            <!-- Stack icon -->
+            <div class="stack-icon-wrap w-20 h-20 mx-auto mb-6 rounded-2xl border border-[rgba(255,255,255,0.08)] bg-[#10151d] flex items-center justify-center shadow-xl shadow-[#c8f169]/5">
+                <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="text-[#c8f169]">
+                    <path d="M12 2L2 7l10 5 10-5-10-5z"></path>
+                    <path d="M2 17l10 5 10-5"></path>
+                    <path d="M2 12l10 5 10-5"></path>
+                </svg>
+            </div>
+
+            <!-- Eyebrow -->
+            <div class="inline-flex items-center gap-2 text-xs uppercase tracking-widest text-[#8b95a5] mb-4 px-3.5 py-1.5 rounded-full border border-[rgba(255,255,255,0.08)] bg-[rgba(255,255,255,0.02)]">
+                <span class="dot"></span> Error 404 · Uncharted Route
+            </div>
+
+            <!-- Title -->
+            <h1 class="text-4xl sm:text-5xl md:text-6xl font-serif font-normal text-[#eef1f5] mb-4 tracking-tight">
+                This wealth path <span class="italic text-[#c8f169]">doesn't exist</span>.
+            </h1>
+
+            <!-- Subtitle -->
+            <p class="text-sm sm:text-base text-[#8b95a5] max-w-lg mx-auto mb-8 leading-relaxed">
+                The financial advisory page, article, or resource you are seeking might have been relocated, restructured, or is momentarily unavailable. Let's redirect you back to sound wealth footing.
+            </p>
+
+            <!-- Actions -->
+            <div class="flex flex-wrap items-center justify-center gap-3.5 mb-12">
+                <a href="index.html" class="btn-primary">
+                    <i class="fa-solid fa-arrow-left text-xs"></i>
+                    <span>Return to Homepage</span>
+                </a>
+                <a href="services.html" class="btn-ghost">
+                    <i class="fa-solid fa-layer-group text-xs text-[#5ee6b8]"></i>
+                    <span>Explore Advisory Services</span>
+                </a>
+                <a href="contact.html" class="btn-ghost">
+                    <i class="fa-solid fa-phone text-xs text-[#e8c987]"></i>
+                    <span>Contact Salem Office</span>
+                </a>
+            </div>
+
+            <!-- Helpful Navigation Grid -->
+            <div class="p-6 rounded-2xl border border-[rgba(255,255,255,0.08)] bg-[rgba(16,21,29,0.7)] backdrop-blur-md text-left">
+                <div class="text-xs uppercase tracking-wider text-[#8b95a5] font-semibold mb-4 text-center">
+                    Popular Client Destinations
+                </div>
+                <div class="grid grid-cols-2 sm:grid-cols-3 gap-3 text-xs">
+                    <a href="services.html#investment" class="p-3 rounded-xl bg-white/[0.02] border border-white/5 hover:border-[#c8f169]/30 hover:bg-white/[0.04] transition-all group">
+                        <div class="font-medium text-white group-hover:text-[#c8f169]">Investment Management</div>
+                        <div class="text-[11px] text-[#8b95a5] mt-0.5">Portfolios &amp; SIPs</div>
+                    </a>
+                    <a href="services.html#goals" class="p-3 rounded-xl bg-white/[0.02] border border-white/5 hover:border-[#c8f169]/30 hover:bg-white/[0.04] transition-all group">
+                        <div class="font-medium text-white group-hover:text-[#c8f169]">Goal-Based Planning</div>
+                        <div class="text-[11px] text-[#8b95a5] mt-0.5">Education &amp; Home</div>
+                    </a>
+                    <a href="services.html#retirement" class="p-3 rounded-xl bg-white/[0.02] border border-white/5 hover:border-[#c8f169]/30 hover:bg-white/[0.04] transition-all group">
+                        <div class="font-medium text-white group-hover:text-[#c8f169]">Retirement Strategy</div>
+                        <div class="text-[11px] text-[#8b95a5] mt-0.5">Inflation-proof income</div>
+                    </a>
+                    <a href="services.html#tax" class="p-3 rounded-xl bg-white/[0.02] border border-white/5 hover:border-[#c8f169]/30 hover:bg-white/[0.04] transition-all group">
+                        <div class="font-medium text-white group-hover:text-[#c8f169]">Tax Optimisation</div>
+                        <div class="text-[11px] text-[#8b95a5] mt-0.5">Legal asset location</div>
+                    </a>
+                    <a href="user dashboard.html" class="p-3 rounded-xl bg-white/[0.02] border border-white/5 hover:border-[#c8f169]/30 hover:bg-white/[0.04] transition-all group">
+                        <div class="font-medium text-white group-hover:text-[#c8f169]">Client Portal</div>
+                        <div class="text-[11px] text-[#8b95a5] mt-0.5">Portfolio &amp; Mandates</div>
+                    </a>
+                    <a href="admin dashboard.html" class="p-3 rounded-xl bg-white/[0.02] border border-white/5 hover:border-[#c8f169]/30 hover:bg-white/[0.04] transition-all group">
+                        <div class="font-medium text-white group-hover:text-[#c8f169]">Advisor Portal</div>
+                        <div class="text-[11px] text-[#8b95a5] mt-0.5">Salem Central Admin</div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="w-full relative z-30 px-6 md:px-12 py-5 border-t border-[rgba(255,255,255,0.08)] bg-[#07090d] flex flex-wrap justify-between items-center gap-3 text-xs text-[#8b95a5]">
+        <p>&copy; 2026 Stackly Investment &amp; Wealth Planning. Salem, Tamil Nadu, India.</p>
+        <div class="flex gap-4">
+            <a href="index.html" class="hover:text-white transition-colors">Home</a>
+            <a href="services.html" class="hover:text-white transition-colors">Services</a>
+            <a href="about.html" class="hover:text-white transition-colors">About</a>
+            <a href="contact.html" class="hover:text-white transition-colors">Contact</a>
+        </div>
+    </footer>
+</body>
+</html>
