@@ -123,10 +123,28 @@
 
         /* Topbar */
         .topbar {
-            height: 64px; border-bottom: 1px solid var(--border);
-            display: flex; align-items: center; padding: 0 1.5rem; gap: 1rem;
-            background: rgba(7, 9, 13, 0.85); backdrop-filter: blur(14px);
+            height: 60px; border-bottom: 1px solid var(--border);
+            display: flex; align-items: center; padding: 0 1.75rem; gap: 0.75rem;
+            background: rgba(7, 9, 13, 0.9); backdrop-filter: blur(16px);
             position: sticky; top: 0; z-index: 30;
+        }
+        .topbar-divider {
+            width: 1px; height: 20px; background: var(--border);
+            flex-shrink: 0;
+        }
+        .topbar-icon-btn {
+            width: 36px; height: 36px; border-radius: 10px;
+            display: flex; align-items: center; justify-content: center;
+            border: 1px solid var(--border); background: transparent;
+            color: var(--muted); cursor: pointer; transition: all 0.2s ease;
+            flex-shrink: 0;
+        }
+        .topbar-icon-btn:hover { background: rgba(255,255,255,0.05); color: var(--text); border-color: rgba(255,255,255,0.14); }
+        .topbar-notif { position: relative; }
+        .topbar-notif-dot {
+            position: absolute; top: 6px; right: 6px;
+            width: 7px; height: 7px; border-radius: 50%;
+            background: var(--accent); border: 1.5px solid #07090d;
         }
 
         /* Cards */
@@ -347,18 +365,29 @@
 
         <!-- Topbar -->
         <header class="topbar">
-            <button onclick="toggleSidebar()" class="lg:hidden text-gray-400 hover:text-white transition-colors focus:outline-none mr-2 p-1" aria-label="Toggle navigation">
+            <button onclick="toggleSidebar()" class="lg:hidden text-gray-400 hover:text-white transition-colors focus:outline-none p-1" aria-label="Toggle navigation">
                 <i class="fa-solid fa-bars text-sm"></i>
             </button>
-            <div class="text-sm font-semibold text-[#eef1f5] hidden sm:flex items-center gap-2" id="topbar-title">
-                <span>Client Portfolio Portal</span>
-                <span class="text-[10px] text-[#8b95a5] font-normal">· Salem Central Advisory</span>
+
+            <!-- Page Context -->
+            <div class="topbar-divider hidden sm:block"></div>
+            <div class="hidden sm:flex flex-col" id="topbar-title">
+                <span class="text-[11px] font-semibold text-[#eef1f5] leading-tight">Client Portfolio Portal</span>
+                <span class="text-[9px] text-[#526075] uppercase tracking-wider font-medium">Salem Central Advisory</span>
             </div>
 
-            <div class="ml-auto flex items-center gap-3">
-                <button onclick="switchTab('catalog')" class="btn-ghost hidden sm:inline-flex text-xs">
-                    <i class="fa-solid fa-magnifying-glass-chart text-xs text-[#c8f169]"></i> Browse Strategies
+            <!-- Right Controls -->
+            <div class="ml-auto flex items-center gap-2">
+                <!-- Notification -->
+                <button class="topbar-icon-btn topbar-notif" title="Notifications" aria-label="Notifications">
+                    <i class="fa-regular fa-bell text-xs"></i>
+                    <span class="topbar-notif-dot"></span>
                 </button>
+                <!-- Advisory -->
+                <button onclick="switchTab('support')" class="topbar-icon-btn" title="Advisory Desk" aria-label="Advisory Desk">
+                    <i class="fa-solid fa-headset text-xs"></i>
+                </button>
+                <!-- Avatar -->
                 <div class="avatar cursor-pointer" onclick="switchTab('profile')" id="user-avatar-top" title="Account Settings">RK</div>
             </div>
         </header>

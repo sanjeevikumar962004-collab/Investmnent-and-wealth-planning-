@@ -303,6 +303,19 @@
     map.forEach((_, id) => { const h = document.getElementById(id); if (h) spy.observe(h); });
   }
 
+  /* ---------- Scroll to top ---------- */
+  const stt = $('#scrollTop');
+  if (stt) {
+    const onScrollStt = () => {
+      stt.classList.toggle('visible', window.scrollY > 300);
+    };
+    addEventListener('scroll', onScrollStt, { passive: true });
+    onScrollStt();
+    stt.addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  }
+
   /* ---------- Footer year ---------- */
   $$('#yr').forEach(y => { y.textContent = new Date().getFullYear(); });
 })();
